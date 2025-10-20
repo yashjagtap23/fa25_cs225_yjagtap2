@@ -142,51 +142,8 @@ namespace Traversals {
   ImageTraversal::Iterator::Iterator(const ImageTraversal* png, const Point & start, double tolerance, TraversalFunctions fns) : work_list_(), visitedAlrdy(png->imageToTraverse.width(), std::vector<bool>(png->imageToTraverse.height(), false)), currentPoint(start), myImage(png), myFns(fns)  // dont need tolerance i think but not sure
   {
     myFns.add(work_list_, start);
-    // visitedAlrdy[start.x][start.y] = true;
-
-    // double theTol = myImage->myTolerance;
-    // const HSLAPixel& startingPixel = myImage->imageToTraverse.getPixel(myImage->startingPoint.x, myImage->startingPoint.y);
-
-    // Point rightP(start.x + 1, start.y);
-    // bool heymama = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0);
-    // if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) <= theTol && //bound cont h
-    //  (visitedAlrdy[rightP.x][rightP.y] == false)
-    // ){
-    //   //good point 
-    //   myFns.add(work_list_, rightP);
-    //   //visitedAlrdy[rightP.x][rightP.y] = true;
-    // }
-    // Point downP(start.x, start.y + 1);
-    // heymama = (downP.x < myImage->imageToTraverse.width() && (downP.x >= 0)) && (downP.y < myImage->imageToTraverse.height() && downP.y >= 0);
-    // if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(downP.x, downP.y)) <= theTol && //bound cont h
-    //  (visitedAlrdy[downP.x][downP.y] == false)
-    // ){
-    //   //good point 
-    //   myFns.add(work_list_, downP);
-    //   //visitedAlrdy[downP.x][downP.y] = true;
-    // }
-    // //left
-    // Point leftP(start.x - 1, start.y);
-    // heymama = (leftP.x < myImage->imageToTraverse.width() && (leftP.x >= 0)) && (leftP.y < myImage->imageToTraverse.height() && leftP.y >= 0);
-    // if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(leftP.x, leftP.y)) <= theTol && //bound cont h
-    //  (visitedAlrdy[leftP.x][leftP.y] == false)
-    // ){
-    //   //good point 
-    //   myFns.add(work_list_, leftP);
-    //   //visitedAlrdy[leftP.x][leftP.y] = true;
-    // }
-    // //up
-    
-    // //down
-    // Point upP(start.x, start.y - 1);
-    // heymama = (upP.x < myImage->imageToTraverse.width() && (upP.x >= 0)) && (upP.y < myImage->imageToTraverse.height() && upP.y >= 0);
-    // if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(upP.x, upP.y)) <= theTol && //bound cont h
-    //  (visitedAlrdy[upP.x][upP.y] == false)
-    // ){
-    //   //good point 
-    //   myFns.add(work_list_, upP);
-    //   //visitedAlrdy[upP.x][upP.y] = true;
-    // }
+    visitedAlrdy[start.x][start.y] = true;
+    std::cout << "start" << start.x << ", " << start.y << std::endl;
   }
 
 
@@ -204,53 +161,60 @@ namespace Traversals {
     //call FNS add pop peek here (will do dfs or bfs)
     if (!work_list_.empty()) {
       Point point2 = myFns.peek(work_list_);
-      if (visitedAlrdy[point2.x][point2.y] == false) {
-        visitedAlrdy[point2.x][point2.y] = true;
+      std::cout << "point2 processing" << point2.x << ", " << point2.y << std::endl;
 
-        // right 
-    Point rightP(point2.x + 1, point2.y);
-    bool heymama = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0);
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) <= theTol && //bound cont h
-     (visitedAlrdy[rightP.x][rightP.y] == false)
-    ){
-      //good point 
-      myFns.add(work_list_, rightP);
-      //visitedAlrdy[rightP.x][rightP.y] = true;
-    }
-    Point downP(point2.x, point2.y + 1);
-    heymama = (downP.x < myImage->imageToTraverse.width() && (downP.x >= 0)) && (downP.y < myImage->imageToTraverse.height() && downP.y >= 0);
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(downP.x, downP.y)) <= theTol && //bound cont h
-     (visitedAlrdy[downP.x][downP.y] == false)
-    ){
-      //good point 
-      myFns.add(work_list_, downP);
-      //visitedAlrdy[downP.x][downP.y] = true;
-    }
-    //left
-    Point leftP(point2.x - 1, point2.y);
-    heymama = (leftP.x < myImage->imageToTraverse.width() && (leftP.x >= 0)) && (leftP.y < myImage->imageToTraverse.height() && leftP.y >= 0);
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(leftP.x, leftP.y)) <= theTol && //bound cont h
-     (visitedAlrdy[leftP.x][leftP.y] == false)
-    ){
-      //good point 
-      myFns.add(work_list_, leftP);
-      //visitedAlrdy[leftP.x][leftP.y] = true;
-    }
-    //up
+      
+        Point rightP(point2.x + 1, point2.y);
+        bool heymama = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0);
+        if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) <= theTol && //bound cont h
+        (visitedAlrdy[rightP.x][rightP.y] == false)
+        ){
+          //good point 
+          myFns.add(work_list_, rightP);
+                std::cout << "added right" << rightP.x << ", " << rightP.y << std::endl;
+          //visitedAlrdy[rightP.x][rightP.y] = true;
+        }
+        Point downP(point2.x, point2.y + 1);
+        heymama = (downP.x < myImage->imageToTraverse.width() && (downP.x >= 0)) && (downP.y < myImage->imageToTraverse.height() && downP.y >= 0);
+        if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(downP.x, downP.y)) <= theTol && //bound cont h
+        (visitedAlrdy[downP.x][downP.y] == false)
+        ){
+          //good point 
+          std::cout << "added down" << downP.x << ", " << downP.y << std::endl;
+          myFns.add(work_list_, downP);
+          //visitedAlrdy[downP.x][downP.y] = true;
+        }
+        Point leftP(point2.x - 1, point2.y);
+        heymama = (leftP.x < myImage->imageToTraverse.width() && (leftP.x >= 0)) && (leftP.y < myImage->imageToTraverse.height() && leftP.y >= 0);
+        if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(leftP.x, leftP.y)) <= theTol && //bound cont h
+        (visitedAlrdy[leftP.x][leftP.y] == false)
+        ){
+          //good point 
+          myFns.add(work_list_, leftP);
+          std::cout << "added left" << leftP.x << ", " << leftP.y << std::endl;
+          //visitedAlrdy[leftP.x][leftP.y] = true;
+        }
+        Point upP(point2.x, point2.y - 1);
+        heymama = (upP.x < myImage->imageToTraverse.width() && (upP.x >= 0)) && (upP.y < myImage->imageToTraverse.height() && upP.y >= 0);
+        if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(upP.x, upP.y)) <= theTol && //bound cont h
+        (visitedAlrdy[upP.x][upP.y] == false)
+        ){
+          //good point 
+          myFns.add(work_list_, upP);
+          std::cout << "added up" << upP.x << ", " << upP.y << std::endl;
+          //visitedAlrdy[upP.x][upP.y] = true;
+        }
 
-    //down
-    Point upP(point2.x, point2.y - 1);
-    heymama = (upP.x < myImage->imageToTraverse.width() && (upP.x >= 0)) && (upP.y < myImage->imageToTraverse.height() && upP.y >= 0);
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(upP.x, upP.y)) <= theTol && //bound cont h
-     (visitedAlrdy[upP.x][upP.y] == false)
-    ){
-      //good point 
-      myFns.add(work_list_, upP);
-      //visitedAlrdy[upP.x][upP.y] = true;
-    }
+        
+      //left
+      
+      //up
 
-      }
+      //down
+      
       myFns.pop(work_list_);
+       std::cout << "point2 popped" << point2.x << ", " << point2.y << std::endl;
+
     }
     //remove current go into while loop 
     while (!work_list_.empty()) {
@@ -261,6 +225,8 @@ namespace Traversals {
 
       if (visitedAlrdy[nextP.x][nextP.y] == true || calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(nextP.x, nextP.y)) >= theTol) {
         //bad point
+         std::cout << "point2 filtered" << nextP.x << ", " << nextP.y << std::endl;
+
         myFns.pop(work_list_);
       } else {
         break;//good point 
@@ -269,9 +235,13 @@ namespace Traversals {
 
     if (work_list_.empty()) {
       myImage = NULL;
+      std::cout << "eend" << std::endl;
     } else {
     Point nextP = myFns.peek(work_list_);
     currentPoint = nextP;
+    visitedAlrdy[nextP.x][nextP.y] = true;
+     std::cout << "next p" << nextP.x << ", " << nextP.y << std::endl;
+
     }
     // visitedAlrdy[nextP.x][nextP.y] = true;
 
