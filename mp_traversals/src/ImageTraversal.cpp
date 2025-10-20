@@ -157,13 +157,14 @@ namespace Traversals {
     
     myFns.pop(work_list_);
     double theTol = myImage->myTolerance;
+    const HSLAPixel& startingPixel = myImage->imageToTraverse.getPixel(myImage->startingPoint.x, myImage->startingPoint.y);
     //call FNS add pop peek here (will do dfs or bfs)
 
     //remove current go into while loop 
     while (!work_list_.empty()) {
       //check 
       Point nextP = myFns.peek(work_list_);
-      const HSLAPixel& startingPixel = myImage->imageToTraverse.getPixel(myImage->mystartingPoint.x, myImage->startingPoint.y);
+      
       const HSLAPixel& nextPixel = myImage->imageToTraverse.getPixel(nextP.x, nextP.y);
 
       if (visitedAlrdy[nextP.x][nextP.y] == true) {
@@ -185,51 +186,43 @@ namespace Traversals {
 
     // right 
     Point rightP(currentPoint.x + 1, currentPoint.y);
-    const HSLAPixel& rightPixel = myImage->imageToTraverse.getPixel(rightP.x, rightP.y);
-    if (calculateDelta(startingPixel, rightPixel) < myTolerance && //tolerance
-      ((rightP.x < myImage->imageToTraverse->width() && (rightP.x > 0)) && //bound w
-     (rightP.y < myImage->imageToTraverse->height() && rightP.y > 0)) && //bound cont h
+    bool heymama = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0)
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) < myTolerance && //bound cont h
      (visitedAlrdy[rightP.x][rightP.y] == false)
     ){
       //good point 
-      myFns.add();
-      visitedAlrdy[rightP.x][rightP.y] == true;
+      myFns.add(work_list_, rightP);
+      visitedAlrdy[rightP.x][rightP.y] = true;
     }
     //left
     Point leftP(currentPoint.x - 1, currentPoint.y);
-    const HSLAPixel& leftPixel = myImage->imageToTraverse.getPixel(leftP.x, leftP.y);
-    if (calculateDelta(startingPixel, leftPixel) < myTolerance && //tolerance
-      ((leftP.x < myImage->imageToTraverse->width() && (leftP.x > 0)) && //bound w
-     (leftP.y < myImage->imageToTraverse->height() && leftP.y > 0)) && //bound cont h
+    bool heymama = (leftP.x < myImage->imageToTraverse.width() && (leftP.x >= 0)) && (leftP.y < myImage->imageToTraverse.height() && leftP.y >= 0)
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(leftP.x, leftP.y)) < myTolerance && //bound cont h
      (visitedAlrdy[leftP.x][leftP.y] == false)
     ){
       //good point 
-      myFns.add();
-      visitedAlrdy[leftP.x][leftP.y] == true;
+      myFns.add(work_list_, leftP);
+      visitedAlrdy[leftP.x][leftP.y] = true;
     }
     //up
-    Point downP(currentPoint.x, currentPoint.y - 1);
-    const HSLAPixel& downPixel = myImage->imageToTraverse.getPixel(downP.x, downP.y);
-    if (calculateDelta(startingPixel, downPixel) < myTolerance && //tolerance
-      ((downP.x < myImage->imageToTraverse->width() && (downP.x > 0)) && //bound w
-     (downP.y < myImage->imageToTraverse->height() && downP.y > 0)) && //bound cont h
+    Point downP(currentPoint.x + 1, currentPoint.y);
+    bool heymama = (downP.x < myImage->imageToTraverse.width() && (downP.x >= 0)) && (downP.y < myImage->imageToTraverse.height() && downP.y >= 0)
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(downP.x, downP.y)) < myTolerance && //bound cont h
      (visitedAlrdy[downP.x][downP.y] == false)
     ){
       //good point 
-      myFns.add();
-      visitedAlrdy[downP.x][downP.y] == true;
+      myFns.add(work_list_, downP);
+      visitedAlrdy[downP.x][downP.y] = true;
     }
     //down
-    Point upP(currentPoint.x, currentPoint.y + 1);
-    const HSLAPixel& upPixel = myImage->imageToTraverse.getPixel(upP.x, upP.y);
-    if (calculateDelta(startingPixel, upPixel) < myTolerance && //tolerance
-      ((upP.x < myImage->imageToTraverse->width() && (upP.x > 0)) && //bound w
-     (upP.y < myImage->imageToTraverse->height() && upP.y > 0)) && //bound cont h
+    Point upP(currentPoint.x + 1, currentPoint.y);
+    bool heymama = (upP.x < myImage->imageToTraverse.width() && (upP.x >= 0)) && (upP.y < myImage->imageToTraverse.height() && upP.y >= 0)
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(upP.x, upP.y)) < myTolerance && //bound cont h
      (visitedAlrdy[upP.x][upP.y] == false)
     ){
       //good point 
-      myFns.add();
-      visitedAlrdy[upP.x][upP.y] == true;
+      myFns.add(work_list_, upP);
+      visitedAlrdy[upP.x][upP.y] = true;
     }
 
   }
