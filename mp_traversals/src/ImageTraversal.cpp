@@ -38,6 +38,7 @@ namespace Traversals {
   void bfs_add(std::deque<Point> & work_list, const Point & point) {
     /** @todo [Part 1] */
     //pushback
+    work_list.push_back(point);
   }
 
   /**
@@ -48,6 +49,7 @@ namespace Traversals {
   void dfs_add(std::deque<Point> & work_list, const Point & point) {
     /** @todo [Part 1] */
     //push back to front
+    work_list.push_front(point);
   }
 
   /**
@@ -57,6 +59,7 @@ namespace Traversals {
   void bfs_pop(std::deque<Point> & work_list) {
     /** @todo [Part 1] */
     //pop front
+    work_list.pop_front();
   }
 
   /**
@@ -66,6 +69,7 @@ namespace Traversals {
   void dfs_pop(std::deque<Point> & work_list) {
     /** @todo [Part 1] */
     //same s
+    work_list.pop_front();
   }
 
   /**
@@ -75,8 +79,9 @@ namespace Traversals {
    */
   Point bfs_peek(std::deque<Point> & work_list) {
     /** @todo [Part 1] */
-    return Point(0, 0);
+    return work_list.front();
     //same
+
   }
 
   /**
@@ -86,7 +91,7 @@ namespace Traversals {
    */
   Point dfs_peek(std::deque<Point> & work_list) {
     /** @todo [Part 1] */
-    return Point(0, 0);
+    return work_list.front();
     //return front
   }
 
