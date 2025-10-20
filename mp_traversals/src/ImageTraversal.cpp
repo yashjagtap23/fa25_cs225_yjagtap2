@@ -167,7 +167,7 @@ namespace Traversals {
       
       const HSLAPixel& nextPixel = myImage->imageToTraverse.getPixel(nextP.x, nextP.y);
 
-      if (visitedAlrdy[nextP.x][nextP.y] == true) {
+      if (visitedAlrdy[nextP.x][nextP.y] == true || calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(nextP.x, nextP.y)) >= theTol) {
         //bad point
         myFns.pop(work_list_);
       } else {
@@ -179,15 +179,15 @@ namespace Traversals {
       myImage = NULL;
     } else {
     Point nextP = myFns.peek(work_list_);
-    visitedAlrdy[nextP.x][nextP.y] == true;
+    visitedAlrdy[nextP.x][nextP.y] = true;
     currentPoint = nextP;
     //now check for in bounds and tolerance here 
     //for RLUP points check if they are in tolerance bounds and visited or not 
 
     // right 
     Point rightP(currentPoint.x + 1, currentPoint.y);
-    bool heymama = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0)
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) < myTolerance && //bound cont h
+    bool heymama = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0);
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) < theTol && //bound cont h
      (visitedAlrdy[rightP.x][rightP.y] == false)
     ){
       //good point 
@@ -196,8 +196,8 @@ namespace Traversals {
     }
     //left
     Point leftP(currentPoint.x - 1, currentPoint.y);
-    bool heymama = (leftP.x < myImage->imageToTraverse.width() && (leftP.x >= 0)) && (leftP.y < myImage->imageToTraverse.height() && leftP.y >= 0)
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(leftP.x, leftP.y)) < myTolerance && //bound cont h
+    heymama = (leftP.x < myImage->imageToTraverse.width() && (leftP.x >= 0)) && (leftP.y < myImage->imageToTraverse.height() && leftP.y >= 0);
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(leftP.x, leftP.y)) < theTol && //bound cont h
      (visitedAlrdy[leftP.x][leftP.y] == false)
     ){
       //good point 
@@ -205,9 +205,9 @@ namespace Traversals {
       visitedAlrdy[leftP.x][leftP.y] = true;
     }
     //up
-    Point downP(currentPoint.x + 1, currentPoint.y);
-    bool heymama = (downP.x < myImage->imageToTraverse.width() && (downP.x >= 0)) && (downP.y < myImage->imageToTraverse.height() && downP.y >= 0)
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(downP.x, downP.y)) < myTolerance && //bound cont h
+    Point downP(currentPoint.x, currentPoint.y - 1);
+    heymama = (downP.x < myImage->imageToTraverse.width() && (downP.x >= 0)) && (downP.y < myImage->imageToTraverse.height() && downP.y >= 0);
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(downP.x, downP.y)) < theTol && //bound cont h
      (visitedAlrdy[downP.x][downP.y] == false)
     ){
       //good point 
@@ -215,9 +215,9 @@ namespace Traversals {
       visitedAlrdy[downP.x][downP.y] = true;
     }
     //down
-    Point upP(currentPoint.x + 1, currentPoint.y);
-    bool heymama = (upP.x < myImage->imageToTraverse.width() && (upP.x >= 0)) && (upP.y < myImage->imageToTraverse.height() && upP.y >= 0)
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(upP.x, upP.y)) < myTolerance && //bound cont h
+    Point upP(currentPoint.x, currentPoint.y + 1);
+    heymama = (upP.x < myImage->imageToTraverse.width() && (upP.x >= 0)) && (upP.y < myImage->imageToTraverse.height() && upP.y >= 0);
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(upP.x, upP.y)) < theTol && //bound cont h
      (visitedAlrdy[upP.x][upP.y] == false)
     ){
       //good point 
@@ -258,7 +258,7 @@ namespace Traversals {
   */
   bool ImageTraversal::Iterator::operator!=(const ImageTraversal::Iterator &other) {
     /** @todo [Part 1] */
-    return false;
+    return myImage != NULL;
   }
 
   /**
