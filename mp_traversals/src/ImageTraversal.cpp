@@ -144,6 +144,49 @@ namespace Traversals {
     myFns.add(work_list_, start);
     visitedAlrdy[start.x][start.y] = true;
 
+    double theTol = myImage->myTolerance;
+    const HSLAPixel& startingPixel = myImage->imageToTraverse.getPixel(myImage->startingPoint.x, myImage->startingPoint.y);
+
+    Point rightP(start.x + 1, start.y);
+    bool heymama = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0);
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) <= theTol && //bound cont h
+     (visitedAlrdy[rightP.x][rightP.y] == false)
+    ){
+      //good point 
+      myFns.add(work_list_, rightP);
+      //visitedAlrdy[rightP.x][rightP.y] = true;
+    }
+    Point downP(start.x, start.y + 1);
+    heymama = (downP.x < myImage->imageToTraverse.width() && (downP.x >= 0)) && (downP.y < myImage->imageToTraverse.height() && downP.y >= 0);
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(downP.x, downP.y)) <= theTol && //bound cont h
+     (visitedAlrdy[downP.x][downP.y] == false)
+    ){
+      //good point 
+      myFns.add(work_list_, downP);
+      //visitedAlrdy[downP.x][downP.y] = true;
+    }
+    //left
+    Point leftP(start.x - 1, start.y);
+    heymama = (leftP.x < myImage->imageToTraverse.width() && (leftP.x >= 0)) && (leftP.y < myImage->imageToTraverse.height() && leftP.y >= 0);
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(leftP.x, leftP.y)) <= theTol && //bound cont h
+     (visitedAlrdy[leftP.x][leftP.y] == false)
+    ){
+      //good point 
+      myFns.add(work_list_, leftP);
+      //visitedAlrdy[leftP.x][leftP.y] = true;
+    }
+    //up
+    
+    //down
+    Point upP(start.x, start.y - 1);
+    heymama = (upP.x < myImage->imageToTraverse.width() && (upP.x >= 0)) && (upP.y < myImage->imageToTraverse.height() && upP.y >= 0);
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(upP.x, upP.y)) <= theTol && //bound cont h
+     (visitedAlrdy[upP.x][upP.y] == false)
+    ){
+      //good point 
+      myFns.add(work_list_, upP);
+      //visitedAlrdy[upP.x][upP.y] = true;
+    }
   }
 
 
@@ -165,7 +208,7 @@ namespace Traversals {
       //check 
       Point nextP = myFns.peek(work_list_);
       
-      const HSLAPixel& nextPixel = myImage->imageToTraverse.getPixel(nextP.x, nextP.y);
+      //const HSLAPixel& nextPixel = myImage->imageToTraverse.getPixel(nextP.x, nextP.y);
 
       if (visitedAlrdy[nextP.x][nextP.y] == true || calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(nextP.x, nextP.y)) >= theTol) {
         //bad point
@@ -187,42 +230,43 @@ namespace Traversals {
     // right 
     Point rightP(currentPoint.x + 1, currentPoint.y);
     bool heymama = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0);
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) < theTol && //bound cont h
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) <= theTol && //bound cont h
      (visitedAlrdy[rightP.x][rightP.y] == false)
     ){
       //good point 
       myFns.add(work_list_, rightP);
-      visitedAlrdy[rightP.x][rightP.y] = true;
+      //visitedAlrdy[rightP.x][rightP.y] = true;
     }
-    //left
-    Point leftP(currentPoint.x - 1, currentPoint.y);
-    heymama = (leftP.x < myImage->imageToTraverse.width() && (leftP.x >= 0)) && (leftP.y < myImage->imageToTraverse.height() && leftP.y >= 0);
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(leftP.x, leftP.y)) < theTol && //bound cont h
-     (visitedAlrdy[leftP.x][leftP.y] == false)
-    ){
-      //good point 
-      myFns.add(work_list_, leftP);
-      visitedAlrdy[leftP.x][leftP.y] = true;
-    }
-    //up
-    Point downP(currentPoint.x, currentPoint.y - 1);
+    Point downP(currentPoint.x, currentPoint.y + 1);
     heymama = (downP.x < myImage->imageToTraverse.width() && (downP.x >= 0)) && (downP.y < myImage->imageToTraverse.height() && downP.y >= 0);
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(downP.x, downP.y)) < theTol && //bound cont h
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(downP.x, downP.y)) <= theTol && //bound cont h
      (visitedAlrdy[downP.x][downP.y] == false)
     ){
       //good point 
       myFns.add(work_list_, downP);
-      visitedAlrdy[downP.x][downP.y] = true;
+      //visitedAlrdy[downP.x][downP.y] = true;
     }
+    //left
+    Point leftP(currentPoint.x - 1, currentPoint.y);
+    heymama = (leftP.x < myImage->imageToTraverse.width() && (leftP.x >= 0)) && (leftP.y < myImage->imageToTraverse.height() && leftP.y >= 0);
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(leftP.x, leftP.y)) <= theTol && //bound cont h
+     (visitedAlrdy[leftP.x][leftP.y] == false)
+    ){
+      //good point 
+      myFns.add(work_list_, leftP);
+      //visitedAlrdy[leftP.x][leftP.y] = true;
+    }
+    //up
+
     //down
-    Point upP(currentPoint.x, currentPoint.y + 1);
+    Point upP(currentPoint.x, currentPoint.y - 1);
     heymama = (upP.x < myImage->imageToTraverse.width() && (upP.x >= 0)) && (upP.y < myImage->imageToTraverse.height() && upP.y >= 0);
-    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(upP.x, upP.y)) < theTol && //bound cont h
+    if (heymama && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(upP.x, upP.y)) <= theTol && //bound cont h
      (visitedAlrdy[upP.x][upP.y] == false)
     ){
       //good point 
       myFns.add(work_list_, upP);
-      visitedAlrdy[upP.x][upP.y] = true;
+      //visitedAlrdy[upP.x][upP.y] = true;
     }
 
   }
