@@ -91,7 +91,10 @@ namespace Traversals {
       /** @todo [Part 1] */
       /** add private members here if neccesary*/
       std::deque<Point> work_list_;
-
+      std::vector<Point> visitedAlrdy;
+      const Point currentPoint;
+      const ImageTraversal* myImage;
+      int lastCountNeighbor;
     };
 
     /**
@@ -112,5 +115,11 @@ namespace Traversals {
   private:
     /** @todo [Part 1] */
     /** add private members here if neccesary*/
+    const Point& startingPoint;
+    double myTolerance;
+    const PNG& imageToTraverse;
+    TraversalFunctions myFns;
   };
 }
+
+//calc difference between two pixels ImageTraversal::calculateDelta
