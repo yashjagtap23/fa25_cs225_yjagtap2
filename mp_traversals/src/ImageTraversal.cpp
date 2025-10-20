@@ -104,7 +104,7 @@ namespace Traversals {
   * it will not be included in this traversal
   * @param fns the set of functions describing a traversal's operation
   */
-  ImageTraversal::ImageTraversal(const PNG & png, const Point & start, double tolerance, TraversalFunctions fns) : imageToTraverse(png), startingPoint(start), myTolerance(tolerance), myFns(fns) {  
+  ImageTraversal::ImageTraversal(const PNG & png, const Point & start, double tolerance, TraversalFunctions fns) : startingPoint(start),  myTolerance(tolerance), imageToTraverse(png), myFns(fns) {  
     /** @todo [Part 1] */
   }
 
@@ -131,7 +131,7 @@ namespace Traversals {
   /**
   * Default iterator constructor.
   */
-  ImageTraversal::Iterator::Iterator() : myImage(NULL), currentPoint(Point(0,0))
+  ImageTraversal::Iterator::Iterator() : currentPoint(Point(0,0)), myImage(NULL)
   {
       //int lastCountNeighbor;
     /** @todo [Part 1] */
@@ -139,7 +139,7 @@ namespace Traversals {
     // created visited
   }
 
-  ImageTraversal::Iterator::Iterator(const ImageTraversal* png, const Point & start, double tolerance, TraversalFunctions fns) : myImage(png), currentPoint(start), myFns(fns), visitedAlrdy(png->imageToTraverse.width(), std::vector<bool>(png->imageToTraverse.height(), false)) // dont need tolerance i think but not sure
+  ImageTraversal::Iterator::Iterator(const ImageTraversal* png, const Point & start, double tolerance, TraversalFunctions fns) : work_list_(), visitedAlrdy(png->imageToTraverse.width(), std::vector<bool>(png->imageToTraverse.height(), false)), currentPoint(start), myImage(png), myFns(fns)  // dont need tolerance i think but not sure
   {
     myFns.add(work_list_, start);
     visitedAlrdy[start.x][start.y] = true;
@@ -155,18 +155,21 @@ namespace Traversals {
   ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
     /** @todo [Part 1] */
     
+    myFns.pop(work_list_);
     //call FNS add pop peek here (will do dfs or bfs)
 
     //remove current go into while loop 
+
     //find a unvisited point
     //once u find it process it 
     //need to be in tolerance bound and in all directions like it sats 
-
+    double theTol = myImage->myTolerance;
     //currentPoint = the one i jus found/visited
     //
     return *this;
     // loikely use end as a bound to prevent things from blowing up or breaking 
     //if work list is empty, no neighbor nodes to add need to break or return error?
+    // make current null 
   }
 
   /**
@@ -176,9 +179,8 @@ namespace Traversals {
   */
   Point ImageTraversal::Iterator::operator*() {
     /** @todo [Part 1] */
-    return Point(0, 0);
+    return currentPoint;
   }
-
   /**
   * Iterator inequality operator.
   *
