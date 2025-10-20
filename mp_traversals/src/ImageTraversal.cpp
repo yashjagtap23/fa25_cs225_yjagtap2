@@ -139,8 +139,10 @@ namespace Traversals {
     // created visited
   }
 
-  ImageTraversal::Iterator::Iterator(const PNG & png, const Point & start, double tolerance, TraversalFunctions fns) 
+  ImageTraversal::Iterator::Iterator(const ImageTraversal* png, const Point & start, double tolerance, TraversalFunctions fns) : myImage(png), currentPoint(start), myFns(fns), visitedAlrdy(png->imageToTraverse.width(), std::vector<bool>(png->imageToTraverse.height(), false)) // dont need tolerance i think but not sure
   {
+    myFns.add(work_list_, start);
+    visitedAlrdy[start.x][start.y] = true;
 
   }
 
@@ -152,8 +154,19 @@ namespace Traversals {
   */
   ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
     /** @todo [Part 1] */
-    return *this;
+    
     //call FNS add pop peek here (will do dfs or bfs)
+
+    //remove current go into while loop 
+    //find a unvisited point
+    //once u find it process it 
+    //need to be in tolerance bound and in all directions like it sats 
+
+    //currentPoint = the one i jus found/visited
+    //
+    return *this;
+    // loikely use end as a bound to prevent things from blowing up or breaking 
+    //if work list is empty, no neighbor nodes to add need to break or return error?
   }
 
   /**

@@ -77,6 +77,7 @@ namespace Traversals {
       using reference = Point&;
 
       Iterator();
+      Iterator(const ImageTraversal* png, const Point & start, double tolerance, TraversalFunctions fns);
 
       Iterator & operator++();
       Point operator*();
