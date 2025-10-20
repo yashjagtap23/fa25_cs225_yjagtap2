@@ -91,10 +91,11 @@ namespace Traversals {
       /** @todo [Part 1] */
       /** add private members here if neccesary*/
       std::deque<Point> work_list_;
-      std::vector<Point> visitedAlrdy;
-      const Point currentPoint;
+      std::vector<std::vector<bool>> visitedAlrdy;
+      Point currentPoint;
       const ImageTraversal* myImage;
-      int lastCountNeighbor;
+      //int lastCountNeighbor;
+      TraversalFunctions myFns;
     };
 
     /**

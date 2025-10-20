@@ -29,6 +29,7 @@ namespace Traversals {
     return sqrt((h*h) + (s*s) + (l*l));
   }
   
+  //bfs first in first out 
   /**
   * Adds a Point for the bfs traversal to visit at some point in the future.
   * @param work_list the deque storing a list of points to be processed
@@ -36,6 +37,7 @@ namespace Traversals {
   */
   void bfs_add(std::deque<Point> & work_list, const Point & point) {
     /** @todo [Part 1] */
+    //pushback
   }
 
   /**
@@ -45,6 +47,7 @@ namespace Traversals {
   */
   void dfs_add(std::deque<Point> & work_list, const Point & point) {
     /** @todo [Part 1] */
+    //push back to front
   }
 
   /**
@@ -53,6 +56,7 @@ namespace Traversals {
   */
   void bfs_pop(std::deque<Point> & work_list) {
     /** @todo [Part 1] */
+    //pop front
   }
 
   /**
@@ -61,6 +65,7 @@ namespace Traversals {
   */
   void dfs_pop(std::deque<Point> & work_list) {
     /** @todo [Part 1] */
+    //same s
   }
 
   /**
@@ -71,6 +76,7 @@ namespace Traversals {
   Point bfs_peek(std::deque<Point> & work_list) {
     /** @todo [Part 1] */
     return Point(0, 0);
+    //same
   }
 
   /**
@@ -81,6 +87,7 @@ namespace Traversals {
   Point dfs_peek(std::deque<Point> & work_list) {
     /** @todo [Part 1] */
     return Point(0, 0);
+    //return front
   }
 
   /**
@@ -92,7 +99,7 @@ namespace Traversals {
   * it will not be included in this traversal
   * @param fns the set of functions describing a traversal's operation
   */
-  ImageTraversal::ImageTraversal(const PNG & png, const Point & start, double tolerance, TraversalFunctions fns) {  
+  ImageTraversal::ImageTraversal(const PNG & png, const Point & start, double tolerance, TraversalFunctions fns) : imageToTraverse(png), startingPoint(start), myTolerance(tolerance), myFns(fns) {  
     /** @todo [Part 1] */
   }
 
@@ -102,6 +109,7 @@ namespace Traversals {
   ImageTraversal::Iterator ImageTraversal::begin() {
     /** @todo [Part 1] */
     return ImageTraversal::Iterator();
+    //peek ?
   }
 
   /**
@@ -128,6 +136,7 @@ namespace Traversals {
   ImageTraversal::Iterator & ImageTraversal::Iterator::operator++() {
     /** @todo [Part 1] */
     return *this;
+    //call FNS add pop peek here (will do dfs or bfs)
   }
 
   /**
