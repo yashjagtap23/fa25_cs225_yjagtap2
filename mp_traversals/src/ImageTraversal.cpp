@@ -113,8 +113,8 @@ namespace Traversals {
   */
   ImageTraversal::Iterator ImageTraversal::begin() {
     /** @todo [Part 1] */
-    return ImageTraversal::Iterator();
-    //peek ?
+    return ImageTraversal::Iterator(this, startingPoint, myTolerance, myFns);
+    //call construcor to create iterator at first point for start 
   }
 
   /**
@@ -123,13 +123,25 @@ namespace Traversals {
   ImageTraversal::Iterator ImageTraversal::end() {
     /** @todo [Part 1] */
     return ImageTraversal::Iterator();
+    //call construcor to create iterator at one past end point 
+    //how do we get to one past end? hmm .end() + 1 idk  
+    // end is always null or sentinel or whatever so i think its fine rn 
   }
 
   /**
   * Default iterator constructor.
   */
-  ImageTraversal::Iterator::Iterator() {
+  ImageTraversal::Iterator::Iterator() : myImage(NULL), currentPoint(Point(0,0))
+  {
+      //int lastCountNeighbor;
     /** @todo [Part 1] */
+    //create work lisr annd add starting point
+    // created visited
+  }
+
+  ImageTraversal::Iterator::Iterator(const PNG & png, const Point & start, double tolerance, TraversalFunctions fns) 
+  {
+
   }
 
 
