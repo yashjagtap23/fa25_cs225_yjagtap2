@@ -156,14 +156,33 @@ namespace Traversals {
     /** @todo [Part 1] */
     
     myFns.pop(work_list_);
+    double theTol = myImage->myTolerance;
     //call FNS add pop peek here (will do dfs or bfs)
 
     //remove current go into while loop 
+    while (work_list_[currentPoint] != NULL) {
+      //check 
+      Point nextP = myFns.peek();
+      if (visitedAlrdy[nextP.x][nextP.y] == true || calculateDelta(nextP.pixel, begin().currentPoint.pixel) >= tolerance) {
+        //bad point
+        myFns.pop(work_list_);
+      } else {
+        break;//good point 
+      }
+    }
+
+    if (work_list_.empty()) {
+      this = end();
+    }
+
+    //go to next 
+
+    
 
     //find a unvisited point
     //once u find it process it 
     //need to be in tolerance bound and in all directions like it sats 
-    double theTol = myImage->myTolerance;
+
     //currentPoint = the one i jus found/visited
     //
     return *this;
