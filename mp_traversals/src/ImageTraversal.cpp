@@ -163,7 +163,6 @@ namespace Traversals {
       Point point2 = myFns.peek(work_list_);
       std::cout << "point2 processing" << point2.x << ", " << point2.y << std::endl;
 
-      
         Point rightP(point2.x + 1, point2.y);
         bool inBound = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0);
         if (inBound && calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(rightP.x, rightP.y)) <= theTol && //bound cont h
@@ -231,24 +230,6 @@ namespace Traversals {
      std::cout << "next p" << nextP.x << ", " << nextP.y << std::endl;
 
     }
-    // visitedAlrdy[nextP.x][nextP.y] = true;
-
-    //now check for in bounds and tolerance here 
-    //for RLUP points check if they are in tolerance bounds and visited or not 
-
-    
-
-  
-    //go to next 
-
-    
-
-    //find a unvisited point
-    //once u find it process it 
-    //need to be in tolerance bound and in all directions like it sats 
-
-    //currentPoint = the one i jus found/visited
-    //
     return *this;
     // loikely use end as a bound to prevent things from blowing up or breaking 
     //if work list is empty, no neighbor nodes to add need to break or return error?
