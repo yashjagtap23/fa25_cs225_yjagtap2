@@ -204,17 +204,6 @@ namespace Traversals {
           std::cout << "added up" << upP.x << ", " << upP.y << std::endl;
           //visitedAlrdy[upP.x][upP.y] = true;
         }
-
-        
-      //left
-      
-      //up
-
-      //down
-      
-      myFns.pop(work_list_);
-       std::cout << "point2 popped" << point2.x << ", " << point2.y << std::endl;
-
     }
     //remove current go into while loop 
     while (!work_list_.empty()) {
@@ -223,10 +212,9 @@ namespace Traversals {
       
       //const HSLAPixel& nextPixel = myImage->imageToTraverse.getPixel(nextP.x, nextP.y);
 
-      if (visitedAlrdy[nextP.x][nextP.y] == true || calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(nextP.x, nextP.y)) >= theTol) {
+      if (visitedAlrdy[nextP.x][nextP.y] || calculateDelta(startingPixel, myImage->imageToTraverse.getPixel(nextP.x, nextP.y)) >= theTol) {
         //bad point
          std::cout << "point2 filtered" << nextP.x << ", " << nextP.y << std::endl;
-
         myFns.pop(work_list_);
       } else {
         break;//good point 
