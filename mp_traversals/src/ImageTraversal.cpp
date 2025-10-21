@@ -162,6 +162,7 @@ namespace Traversals {
     if (!work_list_.empty()) {
       Point point2 = myFns.peek(work_list_);
       std::cout << "point2 processing" << point2.x << ", " << point2.y << std::endl;
+      myFns.pop(work_list_);
 
         Point rightP(point2.x + 1, point2.y);
         bool inBound = (rightP.x < myImage->imageToTraverse.width() && (rightP.x >= 0)) && (rightP.y < myImage->imageToTraverse.height() && rightP.y >= 0);
