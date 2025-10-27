@@ -30,6 +30,7 @@ public:
 private:
 	/** @todo [Part 2] */
 	/** add private members here*/
-
-
+  PNG imageToFill;
+  std::queue<ImageTraversal*> travQ;
+  std::queue<ColorPicker**> cPicker;
 };

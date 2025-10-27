@@ -18,7 +18,8 @@ using namespace cs225;
  */
 FloodFilledImage::FloodFilledImage(const PNG & png) {
   /** @todo [Part 2] */
-}
+  imageToFill = png;
+} 
 
 /**
  * Adds a FloodFill operation to the FloodFillImage.  This function must store the operation,
@@ -29,6 +30,8 @@ FloodFilledImage::FloodFilledImage(const PNG & png) {
  */
 void FloodFilledImage::addFloodFill(Traversals::ImageTraversal & traversal, ColorPicker & colorPicker) {
   /** @todo [Part 2] */
+  travQ.push_back(traversal);
+  cPicker.push_back(colorPicker);
 }
 
 /**
