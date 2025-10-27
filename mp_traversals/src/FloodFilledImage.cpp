@@ -57,12 +57,21 @@ void FloodFilledImage::addFloodFill(Traversals::ImageTraversal & traversal, Colo
 Animation FloodFilledImage::animate(unsigned frameInterval) const {
   /** @todo [Part 2] */
   Animation animation;
-  return animation;
-  for (int i = 0; i < imageToFill.pixel amount; i = i + frameInterval) {
-    int count 0;
-    while (count < frameInterval) {
-      imageToFill.getPixel[i+count] = cp.pop();
-      count = count + 1;
-    }
-  }
+  
+  //add Image intiial frame
+
+  /// do each flood fill in q while q is full 
+
+    // get next 
+    //pop 
+
+    //go through all points in trav
+    //for each
+
+    //get color
+    //update pixel
+
+    //check to add frame or no 
+
+    //add frame
 }
