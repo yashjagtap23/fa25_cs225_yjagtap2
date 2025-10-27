@@ -30,8 +30,8 @@ FloodFilledImage::FloodFilledImage(const PNG & png) {
  */
 void FloodFilledImage::addFloodFill(Traversals::ImageTraversal & traversal, ColorPicker & colorPicker) {
   /** @todo [Part 2] */
-  travQ.push_back(traversal);
-  cPicker.push_back(colorPicker);
+  travQ.push(traversal&);
+  cPicker.push(colorPicker&);
 }
 
 /**
@@ -58,4 +58,11 @@ Animation FloodFilledImage::animate(unsigned frameInterval) const {
   /** @todo [Part 2] */
   Animation animation;
   return animation;
+  for (int i = 0; i < imageToFill.pixel amount; i = i + frameInterval) {
+    int count 0;
+    while (count < frameInterval) {
+      imageToFill.getPixel[i+count] = cp.pop();
+      count = count + 1;
+    }
+  }
 }
