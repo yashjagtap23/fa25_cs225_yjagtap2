@@ -57,9 +57,24 @@ void FloodFilledImage::addFloodFill(Traversals::ImageTraversal & traversal, Colo
 Animation FloodFilledImage::animate(unsigned frameInterval) const {
   /** @todo [Part 2] */
   Animation animation;
-  
+  PNG newImage = imageToFill;
   //add Image intiial frame
+  animation.addFrame(newImage);
 
+  while (!travQ.empty()) {
+    auto myPair = travQ.front();
+    travQ.pop();
+    int myCount = 0;
+    for (Point p1 : myPair.first*) {
+      HSLAPixel theColor = colorPicker->getColor(p1.x, p1.y);
+      newImage.getPixel(p1.x, p1.y) = theColor;
+      myCount = myCount + 1;
+
+      if (myCount % frameInterval == 0) {
+        animation.addFrame(newImage);
+      }
+    }
+  }
   /// do each flood fill in q while q is full 
 
     // get next 
