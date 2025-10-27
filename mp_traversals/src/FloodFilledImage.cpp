@@ -1,6 +1,7 @@
 #include "cs225/PNG.h"
 #include <list>
 #include <iostream>
+#include <utility>
 
 #include "colorPicker/ColorPicker.h"
 #include "ImageTraversal.h"
@@ -30,8 +31,7 @@ FloodFilledImage::FloodFilledImage(const PNG & png) {
  */
 void FloodFilledImage::addFloodFill(Traversals::ImageTraversal & traversal, ColorPicker & colorPicker) {
   /** @todo [Part 2] */
-  travQ.push(traversal&);
-  cPicker.push(colorPicker&);
+  travQ.push(std::make_pair(&traversal, &colorPicker));
 }
 
 /**
