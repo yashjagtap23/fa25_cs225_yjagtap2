@@ -60,13 +60,14 @@ Animation FloodFilledImage::animate(unsigned frameInterval) const {
   PNG newImage = imageToFill;
   //add Image intiial frame
   animation.addFrame(newImage);
+  std::queue<std::pair<Traversals::ImageTraversal*, ColorPicker*>> tempQ = travQ;
 
-  while (!travQ.empty()) {
-    auto myPair = travQ.front();
-    travQ.pop();
-    int myCount = 0;
-    for (Point p1 : myPair.first*) {
-      HSLAPixel theColor = colorPicker->getColor(p1.x, p1.y);
+  while (!tempQ.empty()) {
+    auto myPair = tempQ.front();
+    tempQ.pop();
+    unsigned int myCount = 0;
+    for (Point p1 : *myPair.first) {
+      HSLAPixel theColor = myPair.second->getColor(p1.x, p1.y);
       newImage.getPixel(p1.x, p1.y) = theColor;
       myCount = myCount + 1;
 
@@ -75,6 +76,8 @@ Animation FloodFilledImage::animate(unsigned frameInterval) const {
       }
     }
   }
+  animation.addFrame(newImage);
+  return animation;
   /// do each flood fill in q while q is full 
 
     // get next 

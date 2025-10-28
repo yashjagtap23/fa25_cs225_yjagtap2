@@ -32,5 +32,5 @@ private:
 	/** @todo [Part 2] */
 	/** add private members here*/
   PNG imageToFill;
-  std::queue<std::pair<ImageTraversal*, ColorPicker*> travQ;
+  std::queue<std::pair<Traversals::ImageTraversal*, ColorPicker*>> travQ;
 };
