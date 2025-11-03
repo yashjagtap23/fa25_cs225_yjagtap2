@@ -6,7 +6,7 @@ DisjointSets::DisjointSets() {
 }
 
 DisjointSets::DisjointSets(int num) {
-    myVec = std::vector<int>{num, -1};
+    myVec = std::vector<int>(num, -1);
 }
 
 
@@ -76,4 +76,8 @@ void DisjointSets::setUnion(int a, int b) {
 int DisjointSets::size(int elem) {
     int root1 = find(elem);
     return (myVec[root1] * -1);
+}
+
+int DisjointSets::getValue(int elem) const {
+    return 0;
 }
