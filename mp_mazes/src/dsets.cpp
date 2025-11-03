@@ -1,8 +1,8 @@
 /* Your code here! */
+#include "dsets.h"
 //ii need default constructor 
 // created empy private vector 
 DisjointSets::DisjointSets() {
-    myVec = {};
 }
 
 DisjointSets::DisjointSets(int num) {
@@ -48,11 +48,11 @@ int DisjointSets::find(int elem) {
 //set root of one tree to be child of the other 
 
 //root = find(a)
-if root equal then return same set 
+// if root equal then return same set 
 
-if size(a) > sizeb:
-size b parent is size a
-else vice bersa
+// if size(a) > sizeb:
+// size b parent is size a
+// else vice bersa
 
 void DisjointSets::setUnion(int a, int b) {
     int r1 = find(a);
@@ -64,7 +64,7 @@ void DisjointSets::setUnion(int a, int b) {
     int sizeR1 = myVec[r1];
     int sizeR2 = myVec[r2];
 
-    if (sizeR1 > sizeR2) {
+    if (sizeR1 < sizeR2) {
         myVec[r2] = r1;
         myVec[r1] = sizeR1 + sizeR2;
     } else {

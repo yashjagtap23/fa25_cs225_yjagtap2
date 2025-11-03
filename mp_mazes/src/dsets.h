@@ -29,7 +29,7 @@ class DisjointSets
     /**
      * DisjointSets constructor, creates an empty disjoint set
      */
-     DisjointSets() {}
+     DisjointSets();
 
     /**
      * DisjointSets constructor, creates n unconnected root nodes
