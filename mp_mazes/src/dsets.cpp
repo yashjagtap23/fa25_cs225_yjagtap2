@@ -54,3 +54,26 @@ if size(a) > sizeb:
 size b parent is size a
 else vice bersa
 
+void DisjointSets::setUnion(int a, int b) {
+    int r1 = find(a);
+    int r2 = find(b);
+
+    if (r1 == r2){
+        return;
+    }
+    int sizeR1 = myVec[r1];
+    int sizeR2 = myVec[r2];
+
+    if (sizeR1 > sizeR2) {
+        myVec[r2] = r1;
+        myVec[r1] = sizeR1 + sizeR2;
+    } else {
+        myVec[r1] = r2;
+        myVec[r2] = sizeR1 + sizeR2;
+    }
+}
+    
+int DisjointSets::size(int elem) {
+    int root1 = find(elem);
+    return (myVec[root1] * -1);
+}
