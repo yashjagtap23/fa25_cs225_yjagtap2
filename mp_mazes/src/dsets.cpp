@@ -64,7 +64,7 @@ void DisjointSets::setUnion(int a, int b) {
     int sizeR1 = myVec[r1];
     int sizeR2 = myVec[r2];
 
-    if (sizeR1 < sizeR2) {
+    if (sizeR1 <= sizeR2) {
         myVec[r2] = r1;
         myVec[r1] = sizeR1 + sizeR2;
     } else {
@@ -79,5 +79,5 @@ int DisjointSets::size(int elem) {
 }
 
 int DisjointSets::getValue(int elem) const {
-    return 0;
+    return myVec[elem];
 }
