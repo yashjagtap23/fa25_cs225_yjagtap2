@@ -84,5 +84,6 @@ class DisjointSets
      * Then `getValue(2)` should return 4, NOT 7
      */
     int getValue(int elem) const;
-
+  private:
+    std::vector<int> myVec;
 };
