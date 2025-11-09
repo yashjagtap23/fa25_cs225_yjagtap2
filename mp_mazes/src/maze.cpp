@@ -11,15 +11,55 @@ SquareMaze::SquareMaze() {
 void SquareMaze::makeMaze(int width, int height) {
     //make some rnadom maze 
     // use rand
+    mazeHeight = height;
+    mazeWidth = width;
+
+    Direction dir = 0;
+    Direction dir2 = 1;
+    for (int i = 0; i < height; i++) [
+        for (int j = 0; j < width; j++) {
+            int theIndex = myIndex(j, i);
+            setWall(j, i, dir, true);
+            rightWalls[theIndex] = true;
+            setWall(j, i, dir2, true);
+            downWAlls[theIndex] = true;
+        }
+    ]
     // all the walls at first 
     //set em true in my vecs
 
-
     //direction = random will either be 0 or 1
-    int dir = std::rand() % 2;
+   
     //lets say 1 is down and 0 is right
     //all cels are their own set
     //count the wall that are remove d
+    int removedWallCount = 0;
+    theIndex = myIndex(0, 0);
+    while (removedWallCount < (mazeHeight * mazeWidth)- 1) {
+        dir = std::rand() % 2;
+        int x = std::rand() % mazeWidth;
+        int y = std::rand() % mazeHeight;
+        
+        theIndex = myIndex(x, y);
+        int nextIndex = 0;
+
+        if (dir == 1) {
+            if (y != mazeHeight - 1) {
+                nextIndex = myIndex(x, y + 1);
+            } else {
+                continue;
+            }
+        } else if (dir == 0) {
+            if (x != mazeWidth - 1) {
+                nextIndex = myIndex(x + 1, y);
+            } else {
+                continue;
+            }
+        }
+        if (dset.find() != dsets.find()) {
+
+        }
+    }
     //while until wallRemoved < total cells - 1
     //star randmwall and direction 
     //get neighbor right or down 
@@ -79,12 +119,17 @@ void SquareMaze::setWall(int x, int y, Direction dir, bool exists) {
     //if right and set the right wall approparieltuy 
     // if down and set the down wall approparieltuy 
     //if we are out bounds dont set
-    int theIndex = myIndex(x, y);
+
     if (x < mazeWidth && y < mazeHeight && x >= 0 && y >= 0) {
+        int theIndex = myIndex(x, y);
         if (dir == 1) {
-            downWAlls[theIndex] = exists;
+            if (y != mazeHeight - 1) {
+                downWAlls[theIndex] = exists;
+            }
         } else if (dir == 0) {
-            rightWalls[theIndex] = exists;
+            if (x != mazeWidth - 1) {
+                rightWalls[theIndex] = exists;
+            }
         }
     }
 }
