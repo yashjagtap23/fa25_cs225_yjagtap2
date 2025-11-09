@@ -33,27 +33,29 @@ void SquareMaze::makeMaze(int width, int height) {
 bool SquareMaze::canTravel(int x, int y, Direction dir) const {
     return true;
     //check in bounds
+    int theIndex = myIndex(x, y);
     if (x >= mazeWidth || y >= mazeHeight || x < 0 || y < 0) {
         return false;
     }
 
     if (dir == 2) {
         if (x - 1 > 0) {
-            return !rightWalls[(x -1), y];
+            int newIndex = myIndex(x - 1, y);
+            return !rightWalls[newIndex];
         }
     }
     if (dir == 0) {
-        return !rightWalls[(x), y];
+        return !rightWalls[theIndex];
         
     }
     if (dir == 1) {
-        if (x - 1 > 0) {
-            return !downWAlls[x, y];
-        }
+        return !downWAlls[theIndex];
+        
     }
-    if (dir == 4) {
+    if (dir == 3) {
         if (y - 1 > 0) {
-            return !downWAlls[x, (y-1)];
+            int newIndex = myIndex(1, y - 1);
+            return !downWAlls[newIndex];
         }
     } 
     //check in each direction if its in bounds and if their is a wall in the current cell
@@ -72,11 +74,12 @@ void SquareMaze::setWall(int x, int y, Direction dir, bool exists) {
     //if right and set the right wall approparieltuy 
     // if down and set the down wall approparieltuy 
     //if we are out bounds dont set
+    int theIndex = myIndex(x, y);
     if (x < mazeWidth && y < mazeHeight && x >= 0 && y >= 0) {
         if (dir == 1) {
-            downWAlls[x, y] = exists;
+            downWAlls[theIndex] = exists;
         } else if (dir == 0) {
-            rightWalls[x, y] = exists;
+            rightWalls[theIndex] = exists;
         }
     }
 }
