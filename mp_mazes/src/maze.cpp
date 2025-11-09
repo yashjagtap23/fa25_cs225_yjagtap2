@@ -154,13 +154,13 @@ std::vector<Direction> SquareMaze::solveMaze(int startX) {
         //reverse it 
        
         if (temp == 0) {
-            finalDir = 2;
+            finalDir = (Direction)(2);
         } else if (temp == 1) {
-            finalDir = 3;
+            finalDir = (Direction)(3);
         } else if (temp == 2) {
-            finalDir = 0;
+            finalDir = (Direction)(0);
         } else if (temp == 3) {
-            finalDir = 1;
+            finalDir = (Direction)(1);
         }
         myFinalpath.insert(myFinalpath.begin(), finalDir);
 
@@ -189,28 +189,30 @@ int SquareMaze::myIndex(int x, int y) const {
 
 }
 
-int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int> visitedDistances, std::vector<Direction> backwardsPathingSol) {
+int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int>& visitedDistances, std::vector<Direction>& backwardsPathingSol) {
     std::queue<int> myQ;
     int startingindex = myIndex(startX, 0);
-    myQ.push_back(startingindex);
+    myQ.push(startingindex);
+    visitedDistances[startingindex] = 0;
+
     int myFinalX = startX;
     int maxD = 0;
     while (!myQ.empty()) {
         //dequeue current 
         int myCurrIndex = myQ.front();//dequeue 
         myQ.pop();
-        int x = startingindex % myX
-        int y =  startingindex / myY
+        int x = myCurrIndex % myX;
+        int y =  myCurrIndex / myY;
 
-        if (canTravel(x, y, 0)) { 
-            nextX = x + 1 
-            nextY = y;
-            int nextIndex = (nextX, nextY);
+        if (canTravel(x, y, (Direction)(0))) { 
+            int nextX = x + 1;
+            int nextY = y;
+            int nextIndex = myIndex(nextX, nextY);
 
             if (visitedDistances[nextIndex] == -1) {
                 visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
                 backwardsPathingSol[nextIndex] = (Direction)(0);
-                myQ.push_back(nextIndex);
+                myQ.push(nextIndex);
 
                 if (nextY == mazeHeight - 1) {
                     //bootom row check here 
@@ -220,20 +222,19 @@ int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int> visite
                     } else if (visitedDistances[nextIndex] == maxD && nextX < myFinalX) {
                         myFinalX = nextX;
                     }
-                    //check for max dist
-                    myFinalX = nextX;
+                    //check for max dis
                 }
             }
         }
-        if (canTravel(x, y, 1)) { 
-            nextX = x; 
-            nextY = y + 1;
-            int nextIndex = (nextX, nextY);
+        if (canTravel(x, y, (Direction)(1))) { 
+            int nextX = x;
+            int nextY = y + 1;
+            int nextIndex = myIndex(nextX, nextY);
 
             if (visitedDistances[nextIndex] == -1) {
                 visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
                 backwardsPathingSol[nextIndex] = (Direction)(1);
-                myQ.push_back(nextIndex);
+                myQ.push(nextIndex);
 
                 if (nextY == mazeHeight - 1) {
                     //bootom row check here 
@@ -243,20 +244,19 @@ int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int> visite
                     } else if (visitedDistances[nextIndex] == maxD && nextX < myFinalX) {
                         myFinalX = nextX;
                     }
-                    //check for max dist
-                    myFinalX = nextX;
+                    //check for max dis
                 }
             }
         }
-        if (canTravel(x, y, 2)) { 
-            nextX = x - 1;
-            nextY = y;
-            int nextIndex = (nextX, nextY);
+        if (canTravel(x, y, (Direction)(2))) { 
+            int nextX = x - 1;
+            int nextY = y;
+            int nextIndex = myIndex(nextX, nextY);
 
             if (visitedDistances[nextIndex] == -1) {
                 visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
                 backwardsPathingSol[nextIndex] = (Direction)(2);
-                myQ.push_back(nextIndex);
+                myQ.push(nextIndex);
 
                 if (nextY == mazeHeight - 1) {
                     //bootom row check here 
@@ -266,20 +266,20 @@ int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int> visite
                     } else if (visitedDistances[nextIndex] == maxD && nextX < myFinalX) {
                         myFinalX = nextX;
                     }
-                    //check for max dist
-                    myFinalX = nextX;
+                    //check for max dis
                 }
             }
         }
-        if (canTravel(x, y, 3)) { 
-            nextX = x; 
-            nextY = y - 1;
-            int nextIndex = (nextX, nextY);
+        if (canTravel(x, y, (Direction)(3))) { 
+            int nextX = x;
+            int nextY = y - 1; 
+            
+            int nextIndex = myIndex(nextX, nextY);
 
             if (visitedDistances[nextIndex] == -1) {
                 visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
                 backwardsPathingSol[nextIndex] = (Direction)(3);
-                myQ.push_back(nextIndex);
+                myQ.push(nextIndex);
 
                 if (nextY == mazeHeight - 1) {
                     //bootom row check here 
@@ -289,8 +289,7 @@ int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int> visite
                     } else if (visitedDistances[nextIndex] == maxD && nextX < myFinalX) {
                         myFinalX = nextX;
                     }
-                    //check for max dist
-                    myFinalX = nextX;
+                    //check for max dis
                 }
             }
         }
@@ -300,10 +299,34 @@ int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int> visite
 }
 
 int SquareMaze::findPrevInd(int theIndex, int myX, int myY, std::vector<int> visitedDistances) {
-        //int x = theIndex % myX
-        //int y =  theIndex / myY
+        int x = theIndex % myX;
+        int y =  theIndex / myY;
 
         int findDist = visitedDistances[theIndex] - 1;
+        if (x + 1 < mazeWidth) {
+            int nexIn = myIndex(x + 1, y);
+            if (visitedDistances[nexIn] == findDist) {
+                return nexIn;
+            }
+        } 
+        if (y + 1 < mazeWidth) {
+            int nexIn = myIndex(x, y + 1);
+            if (visitedDistances[nexIn] == findDist) {
+                return nexIn;
+            }
+        }
+        if (x - 1 >= 0) {
+            int nexIn = myIndex(x - 1, y);
+            if (visitedDistances[nexIn] == findDist) {
+                return nexIn;
+            }
+        }
+        if (y - 1 >= 0) {
+            int nexIn = myIndex(x, y - 1);
+            if (visitedDistances[nexIn] == findDist) {
+                return nexIn;
+            }
+        }
 
         //this is for righbr 
         //check next x (x + 1)
