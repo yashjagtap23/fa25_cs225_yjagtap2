@@ -147,22 +147,21 @@ std::vector<Direction> SquareMaze::solveMaze(int startX) {
     int curIndex = finalIndex;
     
 
-    while (visitedDistances[curIndex] > 0) {
+    while (curIndex != -1 && visitedDistances[curIndex] > 0) {
         //get the direction from backwardsPatjhing 
         Direction temp = backwardsPathingSol[curIndex];
-        Direction finalDir = (Direction)(-1);
-        //reverse it 
+        // Direction finalDir = (Direction)(-1);
        
-        if (temp == 0) {
-            finalDir = (Direction)(2);
-        } else if (temp == 1) {
-            finalDir = (Direction)(3);
-        } else if (temp == 2) {
-            finalDir = (Direction)(0);
-        } else if (temp == 3) {
-            finalDir = (Direction)(1);
-        }
-        myFinalpath.insert(myFinalpath.begin(), finalDir);
+        // if (temp == 0) {
+        //     finalDir = (Direction)(2);
+        // } else if (temp == 1) {
+        //     finalDir = (Direction)(3);
+        // } else if (temp == 2) {
+        //     finalDir = (Direction)(0);
+        // } else if (temp == 3) {
+        //     finalDir = (Direction)(1);
+        // }
+        myFinalpath.insert(myFinalpath.begin(), temp);
 
         //right -> lef
         //up is bownd 
@@ -202,7 +201,7 @@ int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int>& visit
         int myCurrIndex = myQ.front();//dequeue 
         myQ.pop();
         int x = myCurrIndex % myX;
-        int y =  myCurrIndex / myY;
+        int y =  myCurrIndex / myX;
 
         if (canTravel(x, y, (Direction)(0))) { 
             int nextX = x + 1;
@@ -298,32 +297,32 @@ int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int>& visit
     return myFinalX;
 }
 
-int SquareMaze::findPrevInd(int theIndex, int myX, int myY, std::vector<int> visitedDistances) {
+int SquareMaze::findPrevInd(int theIndex, int myX, int myY, std::vector<int>& visitedDistances) {
         int x = theIndex % myX;
-        int y =  theIndex / myY;
+        int y =  theIndex / myX;
 
         int findDist = visitedDistances[theIndex] - 1;
         if (x + 1 < mazeWidth) {
             int nexIn = myIndex(x + 1, y);
-            if (visitedDistances[nexIn] == findDist) {
+            if (visitedDistances[nexIn] == findDist && canTravel(x + 1, y, (Direction)(2))) {
                 return nexIn;
             }
         } 
-        if (y + 1 < mazeWidth) {
+        if (y + 1 < mazeHeight) {
             int nexIn = myIndex(x, y + 1);
-            if (visitedDistances[nexIn] == findDist) {
+            if (visitedDistances[nexIn] == findDist && canTravel(x, y + 1, (Direction)(3))) {
                 return nexIn;
             }
         }
         if (x - 1 >= 0) {
             int nexIn = myIndex(x - 1, y);
-            if (visitedDistances[nexIn] == findDist) {
+            if (visitedDistances[nexIn] == findDist && canTravel(x - 1, y, (Direction)(0))) {
                 return nexIn;
             }
         }
         if (y - 1 >= 0) {
             int nexIn = myIndex(x, y - 1);
-            if (visitedDistances[nexIn] == findDist) {
+            if (visitedDistances[nexIn] == findDist && canTravel(x, y - 1, (Direction)(1))) {
                 return nexIn;
             }
         }
