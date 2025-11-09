@@ -15,7 +15,7 @@ void SquareMaze::makeMaze(int width, int height) {
     mazeWidth = width;
     rightWalls.clear();
     downWAlls.clear();
-    Direction dir = 0;
+    Direction dir = (Direction)(0);
     // Direction dir2 = 1;
     for (int i = 0; i < height * width; i++) {
         rightWalls.push_back(true);
@@ -32,9 +32,9 @@ void SquareMaze::makeMaze(int width, int height) {
     //all cels are their own set
     //count the wall that are remove d
     int removedWallCount = 0;
-    theIndex = myIndex(0, 0);
+    int theIndex = myIndex(0, 0);
     while (removedWallCount < (mazeHeight * mazeWidth) - 1) {
-        dir = std::rand() % 2;
+        dir = (Direction)(std::rand() % 2);
         int x = std::rand() % mazeWidth;
         int y = std::rand() % mazeHeight;
         
