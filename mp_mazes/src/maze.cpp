@@ -1,6 +1,6 @@
 /* Your code here! */
 #include "maze.h"
-
+#include <queue>
 
 
 
@@ -154,13 +154,13 @@ std::vector<Direction> SquareMaze::solveMaze(int startX) {
         //reverse it 
        
         if (temp == 0) {
-            finalDir == 2;
+            finalDir = 2;
         } else if (temp == 1) {
-            finalDir == 3;
+            finalDir = 3;
         } else if (temp == 2) {
-            finalDir == 0;
+            finalDir = 0;
         } else if (temp == 3) {
-            finalDir == 1;
+            finalDir = 1;
         }
         myFinalpath.insert(myFinalpath.begin(), finalDir);
 
@@ -189,34 +189,111 @@ int SquareMaze::myIndex(int x, int y) const {
 
 }
 
-void SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int> visitedDistances, std::vector<Direction> backwardsPathingSol) {
+int SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int> visitedDistances, std::vector<Direction> backwardsPathingSol) {
     std::queue<int> myQ;
     int startingindex = myIndex(startX, 0);
     myQ.push_back(startingindex);
     int myFinalX = startX;
+    int maxD = 0;
     while (!myQ.empty()) {
         //dequeue current 
-        int myCurrIndex = //dequeue 
-        //int x = starting inDex % myX
-        //int y =  starting inDex / myY
+        int myCurrIndex = myQ.front();//dequeue 
+        myQ.pop();
+        int x = startingindex % myX
+        int y =  startingindex / myY
 
-        //check if canTravel (x, y, right) 
-         nextX = x + 1 
-         nextY = y;
-         int nextIndex = (nextX, nextY);
+        if (canTravel(x, y, 0)) { 
+            nextX = x + 1 
+            nextY = y;
+            int nextIndex = (nextX, nextY);
 
-         if (visitedDistances[nextIndex] == -1) {
-            visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
-            backwardsPathingSol[nextIndex] = (Direction)(0);
-            myQ.push_back(nextIndex);
+            if (visitedDistances[nextIndex] == -1) {
+                visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
+                backwardsPathingSol[nextIndex] = (Direction)(0);
+                myQ.push_back(nextIndex);
 
-            if (nextY - 1 == mazeHeight - 1) {
-                //bootom row check here 
-                //check for max dist
-                myFinalX = nextX;
+                if (nextY == mazeHeight - 1) {
+                    //bootom row check here 
+                    if (visitedDistances[nextIndex] > maxD) {
+                        maxD = visitedDistances[nextIndex];
+                        myFinalX = nextX;
+                    } else if (visitedDistances[nextIndex] == maxD && nextX < myFinalX) {
+                        myFinalX = nextX;
+                    }
+                    //check for max dist
+                    myFinalX = nextX;
+                }
             }
-         }
+        }
+        if (canTravel(x, y, 1)) { 
+            nextX = x; 
+            nextY = y + 1;
+            int nextIndex = (nextX, nextY);
 
+            if (visitedDistances[nextIndex] == -1) {
+                visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
+                backwardsPathingSol[nextIndex] = (Direction)(1);
+                myQ.push_back(nextIndex);
+
+                if (nextY == mazeHeight - 1) {
+                    //bootom row check here 
+                    if (visitedDistances[nextIndex] > maxD) {
+                        maxD = visitedDistances[nextIndex];
+                        myFinalX = nextX;
+                    } else if (visitedDistances[nextIndex] == maxD && nextX < myFinalX) {
+                        myFinalX = nextX;
+                    }
+                    //check for max dist
+                    myFinalX = nextX;
+                }
+            }
+        }
+        if (canTravel(x, y, 2)) { 
+            nextX = x - 1;
+            nextY = y;
+            int nextIndex = (nextX, nextY);
+
+            if (visitedDistances[nextIndex] == -1) {
+                visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
+                backwardsPathingSol[nextIndex] = (Direction)(2);
+                myQ.push_back(nextIndex);
+
+                if (nextY == mazeHeight - 1) {
+                    //bootom row check here 
+                    if (visitedDistances[nextIndex] > maxD) {
+                        maxD = visitedDistances[nextIndex];
+                        myFinalX = nextX;
+                    } else if (visitedDistances[nextIndex] == maxD && nextX < myFinalX) {
+                        myFinalX = nextX;
+                    }
+                    //check for max dist
+                    myFinalX = nextX;
+                }
+            }
+        }
+        if (canTravel(x, y, 3)) { 
+            nextX = x; 
+            nextY = y - 1;
+            int nextIndex = (nextX, nextY);
+
+            if (visitedDistances[nextIndex] == -1) {
+                visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
+                backwardsPathingSol[nextIndex] = (Direction)(3);
+                myQ.push_back(nextIndex);
+
+                if (nextY == mazeHeight - 1) {
+                    //bootom row check here 
+                    if (visitedDistances[nextIndex] > maxD) {
+                        maxD = visitedDistances[nextIndex];
+                        myFinalX = nextX;
+                    } else if (visitedDistances[nextIndex] == maxD && nextX < myFinalX) {
+                        myFinalX = nextX;
+                    }
+                    //check for max dist
+                    myFinalX = nextX;
+                }
+            }
+        }
          // do other directions 
     }
     return myFinalX;
