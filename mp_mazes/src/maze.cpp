@@ -82,6 +82,7 @@ bool SquareMaze::canTravel(int x, int y, Direction dir) const {
             int newIndex = myIndex(x - 1, y);
             return !rightWalls[newIndex];
         }
+        return false;
     }
     if (dir == 0) {
         if (x != mazeWidth - 1) {
@@ -101,6 +102,7 @@ bool SquareMaze::canTravel(int x, int y, Direction dir) const {
             int newIndex = myIndex(x, y - 1);
             return !downWAlls[newIndex];
         }
+        return false;
     } 
     return false;
     //check in each direction if its in bounds and if their is a wall in the current cell
@@ -175,11 +177,33 @@ std::vector<Direction> SquareMaze::solveMaze(int startX) {
 }
 
 cs225::PNG *SquareMaze::drawMaze(int start) const {
-    return nullptr;
+    //create new png 
+    //set dimensions of PNG (width*10+1,height*10+1)
+
+    //borders black
+
+    //gap for start
+    //((start*10)+1, 0) to ((start+1)*10-1, 0). [The gap is the pixels larger than start*10 and smaller than (start+1)*10 ]
+    //start* 10 + 1
+    //start + 1* 10) -1 
+
+    //drwaw walls 
+    // return 
 }
 
 cs225::PNG *SquareMaze::drawMazeWithSolution(int start) {
-    return nullptr;
+    //png = draw maze
+
+    //get the solution 
+
+    //red white //start in middle
+    //if example if start was 0 the start position of the solution is (5,5)
+    //Each direction in the solution vector corresponds to a trail of 11 red pixels in the given direction. 
+    // If the first step is downward, color pixels (5,5) through (5,15) red. (Red is 0,1,0.5,1 in HSLA)
+
+    //Make the exit by undoing the bottom wall of the destination square: call the destination maze coordinates (x,y),
+    //  and whiten the pixels with coordinates (x*10+k, (y+1)*10) for k from 1 to 9.
+    //return the png 
 }
 
 //use disjoint sets from part 1 to detecy cycles and see which ones are connected and which walls to rmmeve
