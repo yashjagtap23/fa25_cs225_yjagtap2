@@ -13,18 +13,16 @@ void SquareMaze::makeMaze(int width, int height) {
     // use rand
     mazeHeight = height;
     mazeWidth = width;
-
+    rightWalls.clear();
+    downWAlls.clear();
     Direction dir = 0;
-    Direction dir2 = 1;
-    for (int i = 0; i < height; i++) [
-        for (int j = 0; j < width; j++) {
-            int theIndex = myIndex(j, i);
-            setWall(j, i, dir, true);
-            rightWalls[theIndex] = true;
-            setWall(j, i, dir2, true);
-            downWAlls[theIndex] = true;
-        }
-    ]
+    // Direction dir2 = 1;
+    for (int i = 0; i < height * width; i++) {
+        rightWalls.push_back(true);
+        downWAlls.push_back(true);
+    }
+    dset.addElements(mazeHeight * mazeWidth);
+
     // all the walls at first 
     //set em true in my vecs
 
@@ -35,7 +33,7 @@ void SquareMaze::makeMaze(int width, int height) {
     //count the wall that are remove d
     int removedWallCount = 0;
     theIndex = myIndex(0, 0);
-    while (removedWallCount < (mazeHeight * mazeWidth)- 1) {
+    while (removedWallCount < (mazeHeight * mazeWidth) - 1) {
         dir = std::rand() % 2;
         int x = std::rand() % mazeWidth;
         int y = std::rand() % mazeHeight;
@@ -56,8 +54,10 @@ void SquareMaze::makeMaze(int width, int height) {
                 continue;
             }
         }
-        if (dset.find() != dsets.find()) {
-
+        if (dset.find(theIndex) != dset.find(nextIndex)) {
+            setWall(x, y, dir, false);
+            dset.setUnion(dset.find(theIndex), dset.find(nextIndex));
+            removedWallCount++;
         }
     }
     //while until wallRemoved < total cells - 1
