@@ -33,7 +33,29 @@ void SquareMaze::makeMaze(int width, int height) {
 bool SquareMaze::canTravel(int x, int y, Direction dir) const {
     return true;
     //check in bounds
+    if (x >= mazeWidth || y >= mazeHeight || x < 0 || y < 0) {
+        return false;
+    }
 
+    if (dir == 2) {
+        if (x - 1 > 0) {
+            return !rightWalls[(x -1), y];
+        }
+    }
+    if (dir == 0) {
+        return !rightWalls[(x), y];
+        
+    }
+    if (dir == 1) {
+        if (x - 1 > 0) {
+            return !downWAlls[x, y];
+        }
+    }
+    if (dir == 4) {
+        if (y - 1 > 0) {
+            return !downWAlls[x, (y-1)];
+        }
+    } 
     //check in each direction if its in bounds and if their is a wall in the current cell
     // if right check if right wall
     // if there is a wall then no can go 
@@ -50,7 +72,13 @@ void SquareMaze::setWall(int x, int y, Direction dir, bool exists) {
     //if right and set the right wall approparieltuy 
     // if down and set the down wall approparieltuy 
     //if we are out bounds dont set
-
+    if (x < mazeWidth && y < mazeHeight && x >= 0 && y >= 0) {
+        if (dir == 1) {
+            downWAlls[x, y] = exists;
+        } else if (dir == 0) {
+            rightWalls[x, y] = exists;
+        }
+    }
 }
 
 std::vector<Direction> SquareMaze::solveMaze(int startX) {
