@@ -137,24 +137,39 @@ void SquareMaze::setWall(int x, int y, Direction dir, bool exists) {
 std::vector<Direction> SquareMaze::solveMaze(int startX) {
     std::vector<int> visitedDistances(mazeHeight * mazeWidth, -1);
     //-1 might be wrong but we ball
-    std::vector<Direction> backwardsPathingSol(mazeHeight * mazeWidth, -1);
-    std::queue myql;
+    Direction fixedDir = (Direction)(-1);
+    std::vector<Direction> backwardsPathingSol(mazeHeight * mazeWidth, fixedDir);
+    std::queue<int> myql;
 
-    int myX = //call helper here for my bfs (starxX, w, h, visited, backwards);
+    int myX = myBFSThing(startX, mazeWidth, mazeHeight, visitedDistances, backwardsPathingSol);//call helper here for my bfs (starxX, w, h, visited, backwards);
     int finalIndex = myIndex(myX, mazeHeight - 1);
     std::vector<Direction> myFinalpath;
-    int curIndex = myX;
+    int curIndex = finalIndex;
+    
 
     while (visitedDistances[curIndex] > 0) {
         //get the direction from backwardsPatjhing 
+        Direction temp = backwardsPathingSol[curIndex];
+        Direction finalDir = (Direction)(-1);
         //reverse it 
+       
+        if (temp == 0) {
+            finalDir == 2;
+        } else if (temp == 1) {
+            finalDir == 3;
+        } else if (temp == 2) {
+            finalDir == 0;
+        } else if (temp == 3) {
+            finalDir == 1;
+        }
+        myFinalpath.insert(myFinalpath.begin(), finalDir);
+
         //right -> lef
         //up is bownd 
         //vice bersa and stuff'
         //insert at myFinalpath front 
         //push front
-
-        curIndex = //call my prev helper here to go backwards 
+        curIndex = findPrevInd(curIndex, mazeWidth, mazeHeight, visitedDistances);//call my prev helper here to go backwards 
     }
 
     return myFinalpath;
