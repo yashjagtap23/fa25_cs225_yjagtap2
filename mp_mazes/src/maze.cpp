@@ -135,7 +135,29 @@ void SquareMaze::setWall(int x, int y, Direction dir, bool exists) {
 }
 
 std::vector<Direction> SquareMaze::solveMaze(int startX) {
-    return std::vector<Direction>();
+    std::vector<int> visitedDistances(mazeHeight * mazeWidth, -1);
+    //-1 might be wrong but we ball
+    std::vector<Direction> backwardsPathingSol(mazeHeight * mazeWidth, -1);
+    std::queue myql;
+
+    int myX = //call helper here for my bfs (starxX, w, h, visited, backwards);
+    int finalIndex = myIndex(myX, mazeHeight - 1);
+    std::vector<Direction> myFinalpath;
+    int curIndex = myX;
+
+    while (visitedDistances[curIndex] > 0) {
+        //get the direction from backwardsPatjhing 
+        //reverse it 
+        //right -> lef
+        //up is bownd 
+        //vice bersa and stuff'
+        //insert at myFinalpath front 
+        //push front
+
+        curIndex = //call my prev helper here to go backwards 
+    }
+
+    return myFinalpath;
 }
 
 cs225::PNG *SquareMaze::drawMaze(int start) const {
@@ -150,4 +172,53 @@ cs225::PNG *SquareMaze::drawMazeWithSolution(int start) {
 int SquareMaze::myIndex(int x, int y) const {
     return (y*mazeWidth) + x;
 
+}
+
+void SquareMaze::myBFSThing(int startX, int myX, int myY, std::vector<int> visitedDistances, std::vector<Direction> backwardsPathingSol) {
+    std::queue<int> myQ;
+    int startingindex = myIndex(startX, 0);
+    myQ.push_back(startingindex);
+    int myFinalX = startX;
+    while (!myQ.empty()) {
+        //dequeue current 
+        int myCurrIndex = //dequeue 
+        //int x = starting inDex % myX
+        //int y =  starting inDex / myY
+
+        //check if canTravel (x, y, right) 
+         nextX = x + 1 
+         nextY = y;
+         int nextIndex = (nextX, nextY);
+
+         if (visitedDistances[nextIndex] == -1) {
+            visitedDistances[nextIndex] = 1 + visitedDistances[myCurrIndex];
+            backwardsPathingSol[nextIndex] = (Direction)(0);
+            myQ.push_back(nextIndex);
+
+            if (nextY - 1 == mazeHeight - 1) {
+                //bootom row check here 
+                //check for max dist
+                myFinalX = nextX;
+            }
+         }
+
+         // do other directions 
+    }
+    return myFinalX;
+}
+
+int SquareMaze::findPrevInd(int theIndex, int myX, int myY, std::vector<int> visitedDistances) {
+        //int x = theIndex % myX
+        //int y =  theIndex / myY
+
+        int findDist = visitedDistances[theIndex] - 1;
+
+        //this is for righbr 
+        //check next x (x + 1)
+        //check in bounds 
+        //if next index is the findDist return the index of next 
+
+        //repeat for other directions 
+
+    return -1;
 }
