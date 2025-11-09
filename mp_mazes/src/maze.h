@@ -9,6 +9,7 @@
 #include <vector>
 #include "cs225/PNG.h"
 #include "cs225/HSLAPixel.h"
+#include "dsets.h"
 
 
 /**
@@ -173,5 +174,12 @@ public:
    */
   cs225::PNG *drawMazeWithSolution(int start);
 
+private:
+  int mazeWidth;
+  int mazeHeight;
+  std::vector<bool> rightWalls;
+  std::vector<bool> downWAlls;
+  DisjointSets dset;
 
+  int myIndex(int x, int y) const;
 };
