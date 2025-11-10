@@ -1,7 +1,8 @@
 /* Your code here! */
 #include "maze.h"
 #include <queue>
-
+#include <cstdlib>
+#include <ctime>
 
 
 SquareMaze::SquareMaze() {
@@ -11,6 +12,16 @@ SquareMaze::SquareMaze() {
 void SquareMaze::makeMaze(int width, int height) {
     //make some rnadom maze 
     // use rand
+    static bool heySeed = false;
+    if (!heySeed) {
+        std::srand(std::time(0));
+        heySeed = true;
+    }
+    static int heyMama = 0;
+    for (int i = 0; i < heyMama; i++) {
+        std::rand();
+    }
+    heyMama++;
     mazeHeight = height;
     mazeWidth = width;
     rightWalls.clear();
@@ -21,6 +32,7 @@ void SquareMaze::makeMaze(int width, int height) {
         rightWalls.push_back(true);
         downWAlls.push_back(true);
     }
+
     dset.addElements(mazeHeight * mazeWidth);
 
     // all the walls at first 
@@ -194,7 +206,7 @@ cs225::PNG *SquareMaze::drawMaze(int start) const {
     //((start*10)+1, 0) to ((start+1)*10-1, 0). [The gap is the pixels larger than start*10 and smaller than (start+1)*10 ]
     int startP = start * 10 + 1;
     int endP = ((start + 1) * 10) - 1; 
-    for (int i = startP; i < endP; i++) {
+    for (int i = startP; i <= endP; i++) {
         if (i < mazeWidth * 10 + 1) {
             finalOut->getPixel(i, 0) = w1;
         }
@@ -420,9 +432,11 @@ void SquareMaze::drawDaPath(cs225::PNG *finalOut, Direction dir, int& currX, int
         int amountX = currX + i * dirX;
         int amountY = currY + i * dirY;
 
-        finalOut->getPixel(amountX, amountY) = r1;
+        if (amountY >= 0 && amountY < (int)finalOut->height() && amountY >= 0 && amountX < (int)finalOut->width()) {
+            finalOut->getPixel(amountX, amountY) = r1;
+        }
     }
 
-    currX = dirX * 10;
-    currY = dirY * 10;
+    currX += dirX * 10;
+    currY += dirY * 10;
 }
