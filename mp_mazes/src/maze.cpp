@@ -6,22 +6,11 @@
 
 
 SquareMaze::SquareMaze() {
-
 }
 
 void SquareMaze::makeMaze(int width, int height) {
     //make some rnadom maze 
     // use rand
-    static bool seedOnce = false;
-    if (!seedOnce) {
-        std::srand(std::time(0));
-        seedOnce = true;
-    }
-    static int randomize = 0;
-    for (int i = 0; i < randomize; i++) {
-        std::rand();
-    }
-    randomize++;
     mazeHeight = height;
     mazeWidth = width;
     rightWalls.clear();
@@ -32,17 +21,9 @@ void SquareMaze::makeMaze(int width, int height) {
         rightWalls.push_back(true);
         downWAlls.push_back(true);
     }
-
+    dset = DisjointSets();
     dset.addElements(mazeHeight * mazeWidth);
 
-    // all the walls at first 
-    //set em true in my vecs
-
-    //direction = random will either be 0 or 1
-   
-    //lets say 1 is down and 0 is right
-    //all cels are their own set
-    //count the wall that are remove d
     int removedWallCount = 0;
     int theIndex = myIndex(0, 0);
     while (removedWallCount < (mazeHeight * mazeWidth) - 1) {
@@ -72,6 +53,7 @@ void SquareMaze::makeMaze(int width, int height) {
             removedWallCount++;
         }
     }
+}
     //while until wallRemoved < total cells - 1
     //star randmwall and direction 
     //get neighbor right or down 
@@ -80,7 +62,7 @@ void SquareMaze::makeMaze(int width, int height) {
     // set wall false 
     // merge if we remove the walls w the setUnion 
     //wall removed count goes up one 
-}
+
 
 bool SquareMaze::canTravel(int x, int y, Direction dir) const {
     //check in bounds
