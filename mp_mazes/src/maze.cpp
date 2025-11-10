@@ -12,16 +12,16 @@ SquareMaze::SquareMaze() {
 void SquareMaze::makeMaze(int width, int height) {
     //make some rnadom maze 
     // use rand
-    static bool heySeed = false;
-    if (!heySeed) {
+    static bool seedOnce = false;
+    if (!seedOnce) {
         std::srand(std::time(0));
-        heySeed = true;
+        seedOnce = true;
     }
-    static int heyMama = 0;
-    for (int i = 0; i < heyMama; i++) {
+    static int randomize = 0;
+    for (int i = 0; i < randomize; i++) {
         std::rand();
     }
-    heyMama++;
+    randomize++;
     mazeHeight = height;
     mazeWidth = width;
     rightWalls.clear();
