@@ -184,4 +184,5 @@ private:
   int myIndex(int x, int y) const;
   int findPrevInd(int theIndex, int myX, int myY, std::vector<int>& visitedDistances);
   int myBFSThing(int startX, int myX, int myY, std::vector<int>& visitedDistances, std::vector<Direction>& backwardsPathingSol);
+  void drawDaPath(cs225::PNG *finalOut, Direction dir, int& currX, int& currY);
 };
