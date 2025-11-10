@@ -189,6 +189,7 @@ cs225::PNG *SquareMaze::drawMaze(int start) const {
 
     //drwaw walls 
     // return 
+    return nullptr;
 }
 
 cs225::PNG *SquareMaze::drawMazeWithSolution(int start) {
@@ -204,6 +205,7 @@ cs225::PNG *SquareMaze::drawMazeWithSolution(int start) {
     //Make the exit by undoing the bottom wall of the destination square: call the destination maze coordinates (x,y),
     //  and whiten the pixels with coordinates (x*10+k, (y+1)*10) for k from 1 to 9.
     //return the png 
+    return nullptr;
 }
 
 //use disjoint sets from part 1 to detecy cycles and see which ones are connected and which walls to rmmeve
