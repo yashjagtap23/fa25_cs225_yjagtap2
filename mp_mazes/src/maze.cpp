@@ -178,34 +178,78 @@ std::vector<Direction> SquareMaze::solveMaze(int startX) {
 
 cs225::PNG *SquareMaze::drawMaze(int start) const {
     //create new png 
+    PNG finalOut = new PNG(mazeWidth*10 + 1, mazeHeight*10 + 1);
+    HSLA w1(0, 0, 1);
+    HSLA b1(0, 0, 0);
     //set dimensions of PNG (width*10+1,height*10+1)
 
     //borders black
-
+    for (int i = 0; i < mazeWidth * 10 + 1; i++) {
+        finalOut->getPixel(i, 0) = b1;
+    }
+    for (int j = 0; j < mazeHeight * 10 + 1; j++) {
+        finalOut->getPixel(0, j) = b1;
+    }
     //gap for start
     //((start*10)+1, 0) to ((start+1)*10-1, 0). [The gap is the pixels larger than start*10 and smaller than (start+1)*10 ]
-    //start* 10 + 1
-    //start + 1* 10) -1 
+    int startP = start * 10 + 1
+    int endP = ((start + 1) * 10) - 1 
+    for (int i = startP; i < endP; i++) {
+        if (x < mazeWidth * 10 + 1) {
+            finalOut->getPixel(i, 0) = w1;
+        }
+    }
 
+    for (int i = 0; i < mazeHeight; i++) {
+        for (int j = 0; j < mazeWidth; j++) {
+            int daIndex = myIndex(j, i);
+
+            if (downWAlls[daIndex]) {
+                for (int l = 0; l <= 10; l++) {
+                    finalOut->getPixel(j * 10 + l, (i + 1) * 10) = black;
+                }
+            }
+
+            if (rightWalls[daIndex]) {
+                for (int l = 0; l <= 10; l++) {
+                    finalOut->getPixel((j + 1) * 10, i * 10 + l) = black;
+                }
+            }
+        }
+    }
     //drwaw walls 
     // return 
-    return nullptr;
+    return finalOut;
 }
 
 cs225::PNG *SquareMaze::drawMazeWithSolution(int start) {
     //png = draw maze
-
+    HSLA w1(0, 0, 1);
+    HSLA r1(0, 1.0, 0.5, 1.0);
+    PNG *finalOut = drawMaze(start);
+    std::vector<Direction> sol = solveMaze(startX);
+    int currX = start * 10 + 5;
+    int currY = 5;
     //get the solution 
+
+    drawDaPath(finalOut, dir, currX, currY);
+    
 
     //red white //start in middle
     //if example if start was 0 the start position of the solution is (5,5)
     //Each direction in the solution vector corresponds to a trail of 11 red pixels in the given direction. 
     // If the first step is downward, color pixels (5,5) through (5,15) red. (Red is 0,1,0.5,1 in HSLA)
+    //make helper forr this 
 
     //Make the exit by undoing the bottom wall of the destination square: call the destination maze coordinates (x,y),
     //  and whiten the pixels with coordinates (x*10+k, (y+1)*10) for k from 1 to 9.
-    //return the png 
-    return nullptr;
+    int eY = (currY - 5) / 10;
+    int eX = (currX - 5) / 10;
+
+    for (int i = 0; i < 10; i++) {
+        finalOut->getPixel(eX * 10 + i, (eY + 1) * 10) = w1;
+    }    //return the png 
+    return finalOut;
 }
 
 //use disjoint sets from part 1 to detecy cycles and see which ones are connected and which walls to rmmeve
@@ -361,4 +405,23 @@ int SquareMaze::findPrevInd(int theIndex, int myX, int myY, std::vector<int>& vi
         //repeat for other directions 
 
     return -1;
+}
+
+void SquareMaze::drawDaPath(PNG finalOut, Direction dir, int& currX, int& currY) {
+    HSLA r1(0, 1.0, 0.5, 1.0);
+    int myMapY = {0, 1, 0, -1};
+    int myMapX = {1, 0, -1, 0};
+
+    int dirY = myMapY[dir];
+    int dirX = myMapX[dir];
+
+    for (int i = 0; i <= 10; i++) {
+        int amountX = currX * i * dirX;
+        int amountY = currY * i * dirY;
+
+        finalOut.getPixel(amountX, amountY) = r1;
+    }
+
+    currX = currX * 10;
+    currY = currY * 10;
 }
