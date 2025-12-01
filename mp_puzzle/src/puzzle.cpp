@@ -17,10 +17,12 @@ PuzzleState::PuzzleState() {
     int count = 1;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            if (count != 15) {
+            if (count != 16) {
                 myBoard[i][j] = count;
+            } else {
+                myBoard[i][j] = 0;
             }
-            myBoard[i][j] = 0;
+            count++;
         }
     }
 }
@@ -59,7 +61,18 @@ std::array<char, 16> PuzzleState::asArray() const {
 //first make sure the size is the same
 //then u can use two nested loops to check 
 bool PuzzleState::operator==(const PuzzleState &rhs) const {
-
+    if (rhs.size() != *this.size()) {
+        return false;
+    }
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (rhs[i][j] != *this[i][j]) {
+                return false;
+            }
+            continue;
+        }
+    }
+    return true;
 }
 //same as aboce 
 bool PuzzleState::operator!=(const PuzzleState &rhs) const {
