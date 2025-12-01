@@ -13,13 +13,30 @@
 
 
 PuzzleState::PuzzleState() {
-
+//for loops that go through and assign based onb number so 1-15 and then 0 at the end
+    int count = 1;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (count != 15) {
+                myBoard[i][j] = count;
+            }
+            myBoard[i][j] = 0;
+        }
+    }
 }
 //default constructor which creates the solution state initially
 
 
 //row major order 0 indexed s
 PuzzleState::PuzzleState(const std::array<char, 16> state) {
+    //take the input and convert it 
+    int count = 0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            myBoard[i][j] = state[count];
+            count++;
+        }
+    }
 
 }
 
