@@ -98,6 +98,7 @@ public:
 private:
     char myBoard[4][4];
     std::pair<int, int> findMyBlankTile() const;
+    PuzzlesState createMyCopyState(int bR, int bC, int sR, int sC) const;
 };
 
 /**

@@ -99,6 +99,7 @@ const PuzzleState PuzzleState::getNeighbor(Direction direction) const {
     //get the tile the blank will swap with by looking at the direction and pisutin of the blank tile 
     //if we going down the tile to swap is the one above blank so blank would swap wit it 
 
+    //check if its invalid or not (out of bounds ands tuff )
     //make a copy of the current puzzle state (i thin i will usea aa se helper for this)
     //make the change 
 
@@ -126,4 +127,11 @@ std::pair<int, int> PuzzleState::findMyBlankTile() const {
         }
     }
     return {-1, -1};
+}
+
+PuzzleState PuzzleState::createMyCopyState(int bR, int bC, int sR, int sC) const {
+    //make the copied state here but with replacing the blank row and tr tc. 
+    //call as array to get the current board
+
+    //go through with nested for and replace the blank and swapping col row 
 }
