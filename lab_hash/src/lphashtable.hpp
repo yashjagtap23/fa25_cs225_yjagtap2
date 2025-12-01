@@ -212,7 +212,7 @@ void LPHashTable<K, V>::resizeTable()
     }
 
     size = newSize;
-    elems = 0;
+    // elems = 0;
 
     for (size_t i = 0; i < oldSize; i++) {
         if (oldTable[i] != NULL) {
@@ -225,7 +225,7 @@ void LPHashTable<K, V>::resizeTable()
                 if (table[probe] == NULL) {
                     table[probe] = new std::pair<K, V>(key, value);
                     should_probe[probe] = true;
-                    elems++;
+                    // elems++;
                     break;
                 }
             }
