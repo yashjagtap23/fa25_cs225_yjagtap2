@@ -135,10 +135,28 @@ const PuzzleState PuzzleState::getNeighbor(Direction direction) const {
 //all possible states from a single move 
 std::vector<PuzzleState> PuzzleState::getNeighbors() const {
     std::vector<PuzzleState> myStates; 
-    myStates.push_back(getNeighbor(Direction::UP));
-    myStates.push_back(getNeighbor(Direction::DOWN));
-    myStates.push_back(getNeighbor(Direction::LEFT));
-    myStates.push_back(getNeighbor(Direction::RIGHT));
+    std::array<char, 16> blanks = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    PuzzleState blankOne = PuzzleState(blanks);
+
+    PuzzleState temp; 
+
+    temp = getNeighbor(Direction::UP);
+    if (temp != blankOne) {
+        myStates.push_back(temp);
+    }
+    temp = getNeighbor(Direction::DOWN);
+    if (temp != blankOne) {
+        myStates.push_back(temp);
+    }
+    temp = getNeighbor(Direction::LEFT);
+    if (temp != blankOne) {
+        myStates.push_back(temp);
+    }
+    temp = getNeighbor(Direction::RIGHT);
+    if (temp != blankOne) {
+        myStates.push_back(temp);
+    }
+   
     return myStates;
 }
 
