@@ -98,27 +98,27 @@ const PuzzleState PuzzleState::getNeighbor(Direction direction) const {
     //get the blank tile place 
     std::pair<int, int> myPair = findMyBlankTile();
     std::pair<int, int> theSwappingOne;
-    if (direction == Direction::'UP') {
+    std::array<char, 16> blanks = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    if (direction == Direction::UP) {
         if (myPair.first == 3) {
-            std::array{char, 16} blanks = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
             return PuzzleState(blanks);
         }
         theSwappingOne = {myPair.first + 1, myPair.second};
-    } else if (direction == Direction::'DOWN') {
+    } else if (direction == Direction::DOWN) {
         if (myPair.first == 0) {
-            return PuzzleState();
+            return PuzzleState(blanks);
         }
         theSwappingOne = {myPair.first - 1, myPair.second};
-    } else if (direction == Direction::'LEFT') {
+    } else if (direction == Direction::LEFT) {
         if (myPair.second == 3) {
-            return PuzzleState();
-        }
-        theSwappingOne = {myPair.first, myPair.second - 1};
-    } else {
-        if (myPair.second == 0) {
-            return PuzzleState();
+            return PuzzleState(blanks);
         }
         theSwappingOne = {myPair.first, myPair.second + 1};
+    } else {
+        if (myPair.second == 0) {
+            return PuzzleState(blanks);
+        }
+        theSwappingOne = {myPair.first, myPair.second - 1};
     }
     //get the tile the blank will swap with by looking at the direction and pisutin of the blank tile 
     //if we going down the tile to swap is the one above blank so blank would swap wit it 
@@ -134,7 +134,12 @@ const PuzzleState PuzzleState::getNeighbor(Direction direction) const {
 
 //all possible states from a single move 
 std::vector<PuzzleState> PuzzleState::getNeighbors() const {
-
+    std::vector<PuzzleState> myStates; 
+    myStates.push_back(getNeighbor(Direction::UP));
+    myStates.push_back(getNeighbor(Direction::DOWN));
+    myStates.push_back(getNeighbor(Direction::LEFT));
+    myStates.push_back(getNeighbor(Direction::RIGHT));
+    return myStates;
 }
 
 //manahttan thing cehck sassingment i think its jus abs of x diff - abs val of athe y diff 
