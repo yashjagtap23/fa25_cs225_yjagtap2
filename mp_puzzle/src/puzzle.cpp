@@ -10,6 +10,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <cmath>
 
 
 PuzzleState::PuzzleState() {
@@ -170,17 +171,26 @@ int PuzzleState::manhattanDistance(const PuzzleState desiredState) const {
         std::pair<int, int> myCurrent = myFinderHelper(i);
         std::pair<int, int> myDesired = desiredState.myFinderHelper(i);
 
-        mhD += std::abs(myCurrent.first - myDesired.first) + std::abs(myCurrent.second - myDesired.second);
+        mHD += std::abs(myCurrent.first - myDesired.first) + std::abs(myCurrent.second - myDesired.second);
     }
     //make current one an array
     //loop through and compare and calc 
     //use helper to find target va; 
     //sum up 
 
-    return mHD:
+    return mHD;
 }
 
-std::pair<int, int> PuzzleState::findMy
+std::pair<int, int> PuzzleState::myFinderHelper(int value) const {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (myBoard[i][j] == value) {
+                return {i, j};
+            }
+        }
+    }
+    return {-1, -1};
+}
 
 std::pair<int, int> PuzzleState::findMyBlankTile() const {
     for (int i = 0; i < 4; i++) {
@@ -208,4 +218,12 @@ PuzzleState PuzzleState::createMyCopyState(int bR, int bC, int sR, int sC) const
     return PuzzleState(myArrayCopy);
     //go through after calculating new index since we can jus stick w the 1d
     //polus we know its got to b 4x4
+}
+
+std::vector<PuzzleState> solveBFS(const PuzzleState &startState, const PuzzleState &desiredState, size_t *iterations) {
+    return {};
+}
+
+std::vector<PuzzleState> solveAstar(const PuzzleState& startState, const PuzzleState &desiredState, size_t *iterations) {
+    return {};
 }

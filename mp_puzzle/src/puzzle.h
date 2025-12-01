@@ -98,6 +98,7 @@ public:
 private:
     char myBoard[4][4];
     std::pair<int, int> findMyBlankTile() const;
+    std::pair<int, int> myFinderHelper(int value) const;
     PuzzleState createMyCopyState(int bR, int bC, int sR, int sC) const;
 };
 
