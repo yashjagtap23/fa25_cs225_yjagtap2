@@ -94,7 +94,7 @@ bool PuzzleState::operator<(const PuzzleState &rhs) const {
 }
 
 //neighbor if invalid then all 0s
-const PuzzleState PuzzleState::getNeighbor(Direction direction) const {
+PuzzleState PuzzleState::getNeighbor(Direction direction) const {
     //get the blank tile place 
     std::pair<int, int> myPair = findMyBlankTile();
     std::pair<int, int> theSwappingOne;
@@ -161,8 +161,14 @@ std::vector<PuzzleState> PuzzleState::getNeighbors() const {
 }
 
 //manahttan thing cehck sassingment i think its jus abs of x diff - abs val of athe y diff 
-int PuzzleState::manhattanDistance(const PuzzleState desiredState = PuzzleState()) const {
+int PuzzleState::manhattanDistance(const PuzzleState desiredState) const {
+    int mHD = 0;
+    //make desired state an array 
+    //make current one an array
+    //loop through and compare and calc 
+    //sum up 
 
+    return mHD:
 }
 
 std::pair<int, int> PuzzleState::findMyBlankTile() const {
