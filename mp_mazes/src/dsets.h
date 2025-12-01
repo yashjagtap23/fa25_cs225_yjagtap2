@@ -29,7 +29,7 @@ class DisjointSets
     /**
      * DisjointSets constructor, creates an empty disjoint set
      */
-     DisjointSets() {}
+     DisjointSets();
 
     /**
      * DisjointSets constructor, creates n unconnected root nodes
@@ -84,5 +84,6 @@ class DisjointSets
      * Then `getValue(2)` should return 4, NOT 7
      */
     int getValue(int elem) const;
-
+  private:
+    std::vector<int> myVec;
 };

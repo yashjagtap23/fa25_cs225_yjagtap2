@@ -1,6 +1,7 @@
 #include "cs225/PNG.h"
 #include <list>
 #include <iostream>
+#include <utility>
 
 #include "colorPicker/ColorPicker.h"
 #include "ImageTraversal.h"
@@ -18,7 +19,8 @@ using namespace cs225;
  */
 FloodFilledImage::FloodFilledImage(const PNG & png) {
   /** @todo [Part 2] */
-}
+  imageToFill = png;
+} 
 
 /**
  * Adds a FloodFill operation to the FloodFillImage.  This function must store the operation,
@@ -29,6 +31,7 @@ FloodFilledImage::FloodFilledImage(const PNG & png) {
  */
 void FloodFilledImage::addFloodFill(Traversals::ImageTraversal & traversal, ColorPicker & colorPicker) {
   /** @todo [Part 2] */
+  travQ.push(std::make_pair(&traversal, &colorPicker));
 }
 
 /**
@@ -54,5 +57,39 @@ void FloodFilledImage::addFloodFill(Traversals::ImageTraversal & traversal, Colo
 Animation FloodFilledImage::animate(unsigned frameInterval) const {
   /** @todo [Part 2] */
   Animation animation;
+  PNG newImage = imageToFill;
+  //add Image intiial frame
+  animation.addFrame(newImage);
+  std::queue<std::pair<Traversals::ImageTraversal*, ColorPicker*>> tempQ = travQ;
+
+  while (!tempQ.empty()) {
+    auto myPair = tempQ.front();
+    tempQ.pop();
+    unsigned int myCount = 0;
+    for (Point p1 : *myPair.first) {
+      HSLAPixel theColor = myPair.second->getColor(p1.x, p1.y);
+      newImage.getPixel(p1.x, p1.y) = theColor;
+      myCount = myCount + 1;
+
+      if (myCount % frameInterval == 0) {
+        animation.addFrame(newImage);
+      }
+    }
+  }
+  animation.addFrame(newImage);
   return animation;
+  /// do each flood fill in q while q is full 
+
+    // get next 
+    //pop 
+
+    //go through all points in trav
+    //for each
+
+    //get color
+    //update pixel
+
+    //check to add frame or no 
+
+    //add frame
 }

@@ -26,6 +26,33 @@
  */
 NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
     /* Your code goes here! */
+    for (unsigned tokens = 0; tokens <= startingTokens; tokens++) {
+      std::string one = "p1-" + std::to_string(tokens);
+      std::string two = "p2-" + std::to_string(tokens);
+      g_.insertVertex(one);
+      g_.insertVertex(two);
+    }
+
+    for (int tokens = startingTokens; tokens >= 1; tokens--) {
+      std::string one = "p1-" + std::to_string(tokens);
+      std::string two = "p2-" + std::to_string(tokens);
+      if (tokens >= 1) {
+        g_.insertEdge(one, "p2-" + std::to_string(tokens - 1));
+
+      } if (tokens >= 2) {
+        g_.insertEdge(one, "p2-" + std::to_string(tokens - 2));
+      }
+      if (tokens >= 1) {
+        g_.insertEdge(two, "p1-" + std::to_string(tokens - 1));
+      }
+      if (tokens >= 2) {
+        g_.insertEdge(two, "p1-" + std::to_string(tokens - 2));
+      }
+    }
+    for (auto &e : g_.getEdges()) {
+      g_.setEdgeWeight(e.source, e.dest, 0);
+    }
+    startingVertex_ = "p1-" + std::to_string(startingTokens);
 }
 
 /**
@@ -38,8 +65,22 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
  * @returns A random path through the state space graph.
  */
 std::vector<Edge> NimLearner::playRandomGame() const {
-  vector<Edge> path;
+  std::vector<Edge> path;
+  std::string curr = startingVertex_;
  /* Your code goes here! */
+  while (curr != "p1-0" && curr != "p2-0") {
+    std::vector<std::string> nextOnes = g_.getAdjacent(curr);
+    if (nextOnes.empty()) {
+      break;
+    } 
+    int rIndex = rand() % nextOnes.size();
+    std::string myNext = nextOnes[rIndex];
+
+    Edge e = g_.getEdge(curr, myNext);
+    path.push_back(e);
+    curr = myNext;
+    
+  }
   return path;
 }
 
@@ -61,6 +102,31 @@ std::vector<Edge> NimLearner::playRandomGame() const {
  */
 void NimLearner::updateEdgeWeights(const std::vector<Edge> & path) {
  /* Your code goes here! */
+ if (path.empty()) {
+  return;
+ }
+
+ std::string lastV = path.back().dest;
+ bool heyMama = (lastV.find("p2-0") != std::string::npos);
+
+ for (const Edge &e : path) {
+  std::string s = e.source;
+  int w = g_.getEdgeWeight(s, e.dest);
+  if (s.find("p1-") != std::string::npos) {
+    if (heyMama) {
+      g_.setEdgeWeight(s, e.dest, w + 1);
+    }
+    else {
+      g_.setEdgeWeight(s, e.dest, w - 1);
+    }
+  } else {
+    if (heyMama) {
+      g_.setEdgeWeight(s, e.dest, w - 1);
+    } else {
+      g_.setEdgeWeight(s, e.dest, w + 1);
+    }
+  }
+ }
 }
 
 /**

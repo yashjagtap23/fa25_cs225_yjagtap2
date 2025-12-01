@@ -13,6 +13,7 @@
 
 #include "Point.h"
 #include "Animation.h"
+#include <queue>
 
 using namespace cs225;
 /**
@@ -30,6 +31,6 @@ public:
 private:
 	/** @todo [Part 2] */
 	/** add private members here*/
-
-
+  PNG imageToFill;
+  std::queue<std::pair<Traversals::ImageTraversal*, ColorPicker*>> travQ;
 };
