@@ -61,15 +61,12 @@ std::array<char, 16> PuzzleState::asArray() const {
 //first make sure the size is the same
 //then u can use two nested loops to check 
 bool PuzzleState::operator==(const PuzzleState &rhs) const {
-    if (rhs.size() != *this.size()) {
-        return false;
-    }
+
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            if (rhs[i][j] != *this[i][j]) {
+            if (rhs.myBoard[i][j] != myBoard[i][j]) {
                 return false;
             }
-            continue;
         }
     }
     return true;
@@ -82,6 +79,16 @@ bool PuzzleState::operator!=(const PuzzleState &rhs) const {
 
 //at the first diff (index i) return if A < B or vice versa if all equal then that mean return false since operator == would ve true so maybe check with that one first 
 bool PuzzleState::operator<(const PuzzleState &rhs) const {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (rhs.myBoard[i][j] != myBoard[i][j]) {
+                if (myBoard[i][j] < rhs.myBoard[i][j]) {
+                    return true;
+                } 
+            }
+        }
+    }
+    return false;
 
 }
 
