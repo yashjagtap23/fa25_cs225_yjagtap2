@@ -85,6 +85,7 @@ bool PuzzleState::operator<(const PuzzleState &rhs) const {
                 if (myBoard[i][j] < rhs.myBoard[i][j]) {
                     return true;
                 } 
+                return false;
             }
         }
     }
@@ -94,6 +95,14 @@ bool PuzzleState::operator<(const PuzzleState &rhs) const {
 
 //neighbor if invalid then all 0s
 const PuzzleState PuzzleState::getNeighbor(Direction direction) const {
+    //get the blank tile place 
+    //get the tile the blank will swap with by looking at the direction and pisutin of the blank tile 
+    //if we going down the tile to swap is the one above blank so blank would swap wit it 
+
+    //make a copy of the current puzzle state (i thin i will usea aa se helper for this)
+    //make the change 
+
+    //return it 
 
     return PuzzleState();
 }
