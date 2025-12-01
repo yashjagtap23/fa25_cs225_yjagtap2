@@ -54,24 +54,50 @@ void SCHashTable<K, V>::insert(K const& key, V const& value)
      * @todo Implement this function.
      *
      */
+     size_t mysize = hashes::hash(key, size);
+     std::pair<K, V> myPair (key, value);
+     table[mysize].push_front(myPair);
+     elems++;
+     if (shouldResize()) {
+        resizeTable();
+     }
+
 }
 
 template <class K, class V>
 void SCHashTable<K, V>::remove(K const& key)
 {
-    typename std::list<std::pair<K, V>>::iterator it;
+    size_t mysize = hashes::hash(key, size);
+
+    typename std::list<std::pair<K, V>>::iterator it = table[mysize].begin();
+    while (it != table[mysize].end()) {
+        if (it->first == key) {
+            table[mysize].erase(it);
+            elems--;
+            return;
+        }
+        it++;
+    }
     /**
      * @todo Implement this function.
      *
      * Please read the note in the lab spec about list iterators and the
      * erase() function on std::list!
      */
-    (void) key; // prevent warnings... When you implement this function, remove this line.
+    //(void) key; // prevent warnings... When you implement this function, remove this line.
 }
 
 template <class K, class V>
 V SCHashTable<K, V>::find(K const& key) const
 {
+    size_t mysize = hashes::hash(key, size);
+
+    typename std::list<std::pair<K, V>>::const_iterator it;
+    for (it = table[mysize].begin(); it != table[mysize].end(); it++) {
+        if (it->first == key) {
+            return it->second;
+        }
+    }
 
     /**
      * @todo: Implement this function.
@@ -125,7 +151,25 @@ void SCHashTable<K, V>::clear()
 template <class K, class V>
 void SCHashTable<K, V>::resizeTable()
 {
-    typename std::list<std::pair<K, V>>::iterator it;
+    size_t myNewSize = findPrime(size * 2);
+    std::list<std::pair<K, V>>* myNewTable = new std::list<std::pair<K, V>>[myNewSize];
+
+    for (size_t i = 0; i < size; i++) {
+        typename std::list<std::pair<K, V>>::iterator it;
+        for (it = table[i].begin(); it != table[i].end(); it++) {
+            K const& key = it->first;
+            V const& value = it->second;
+
+            size_t newOne = hashes::hash(key, myNewSize);
+            std::pair<K, V> myPair(key, value);
+            myNewTable[newOne].push_front(myPair);
+        }
+    }
+
+    delete[] table;
+    table = myNewTable;
+    size = myNewSize;
+
     /**
      * @todo Implement this function.
      *
