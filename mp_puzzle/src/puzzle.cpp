@@ -132,6 +132,16 @@ std::pair<int, int> PuzzleState::findMyBlankTile() const {
 PuzzleState PuzzleState::createMyCopyState(int bR, int bC, int sR, int sC) const {
     //make the copied state here but with replacing the blank row and tr tc. 
     //call as array to get the current board
+    std<char, 16> myArrayCopy = asArray();
+    int bIndex = 4 * bR + bC;
+    int sIndex = 4 * sR + sC;
 
-    //go through with nested for and replace the blank and swapping col row 
+    int temp = myArrayCopy[sIndex];
+
+    myArrayCopy[sIndex] = myArrayCopy[bIndex];
+    myArrayCopy[bIndex] = temp;
+
+    return PuzzlesState(myArrayCopy);
+    //go through after calculating new index since we can jus stick w the 1d
+    //polus we know its got to b 4x4
 }
