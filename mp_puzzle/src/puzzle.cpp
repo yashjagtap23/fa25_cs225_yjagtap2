@@ -160,16 +160,27 @@ std::vector<PuzzleState> PuzzleState::getNeighbors() const {
     return myStates;
 }
 
-//manahttan thing cehck sassingment i think its jus abs of x diff - abs val of athe y diff 
+//manahttan thing cehck sassingment i think its jus abs of x diff + abs val of athe y diff 
 int PuzzleState::manhattanDistance(const PuzzleState desiredState) const {
     int mHD = 0;
     //make desired state an array 
+    std::array<char, 16> myDState = desiredState.asArray();
+    std::array<char, 16> myCState = asArray();
+    for (int i = 1; i < 16; i++) {
+        std::pair<int, int> myCurrent = myFinderHelper(i);
+        std::pair<int, int> myDesired = desiredState.myFinderHelper(i);
+
+        mhD += std::abs(myCurrent.first - myDesired.first) + std::abs(myCurrent.second - myDesired.second);
+    }
     //make current one an array
     //loop through and compare and calc 
+    //use helper to find target va; 
     //sum up 
 
     return mHD:
 }
+
+std::pair<int, int> PuzzleState::findMy
 
 std::pair<int, int> PuzzleState::findMyBlankTile() const {
     for (int i = 0; i < 4; i++) {
