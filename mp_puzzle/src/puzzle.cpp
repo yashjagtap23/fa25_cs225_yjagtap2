@@ -12,33 +12,72 @@
 #include <vector>
 
 
-PuzzleState();
+PuzzleState::PuzzleState() {
+
+}
 //default constructor which creates the solution state initially
 
 
 //row major order 0 indexed s
-PuzzleState(const std::array<char, 16> state);
+PuzzleState::PuzzleState(const std::array<char, 16> state) {
+
+}
 
 //convert puzle satate ingto a array 
+std::array<char, 16> PuzzleState::asArray() const {
+    std::array<char, 16> myArray;
+    int count = 0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            myArray[count] = myBoard[i][j];
+            count++;
+        }
+    }
 
-std::array<char, 16> asArray() const;
+    return myArray;
+}
 
 //equal when value of each tile is the same
 //simple for loop and iterate through and check? 
 //first make sure the size is the same
 //then u can use two nested loops to check 
-bool operator==(const PuzzleState &rhs) const;
+bool PuzzleState::operator==(const PuzzleState &rhs) const {
+
+}
 //same as aboce 
-bool operator!=(const PuzzleState &rhs) const;
+bool PuzzleState::operator!=(const PuzzleState &rhs) const {
+    return !(*this == rhs);
+
+}
 
 //at the first diff (index i) return if A < B or vice versa if all equal then that mean return false since operator == would ve true so maybe check with that one first 
-bool operator<(const PuzzleState &rhs) const;
+bool PuzzleState::operator<(const PuzzleState &rhs) const {
+
+}
 
 //neighbor if invalid then all 0s
-PuzzleState getNeighbor(Direction direction) const;
+const PuzzleState PuzzleState::getNeighbor(Direction direction) const {
+
+    return PuzzleState();
+}
 
 //all possible states from a single move 
-std::vector<PuzzleState> getNeighbors() const;
+std::vector<PuzzleState> PuzzleState::getNeighbors() const {
+
+}
 
 //manahttan thing cehck sassingment i think its jus abs of x diff - abs val of athe y diff 
-int manhattanDistance(const PuzzleState desiredState = PuzzleState()) const;
+int PuzzleState::manhattanDistance(const PuzzleState desiredState = PuzzleState()) const {
+
+}
+
+std::pair<int, int> PuzzleState::findMyBlankTile() const {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (myBoard[i][j] == 0) {
+                return {i, j};
+            }
+        }
+    }
+    return {-1, -1};
+}

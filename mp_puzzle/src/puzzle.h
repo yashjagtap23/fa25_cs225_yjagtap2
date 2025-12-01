@@ -96,6 +96,8 @@ public:
 
 
 private:
+    char myBoard[4][4];
+    std::pair<int, int> findMyBlankTile() const;
 };
 
 /**
