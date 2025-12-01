@@ -97,26 +97,28 @@ bool PuzzleState::operator<(const PuzzleState &rhs) const {
 const PuzzleState PuzzleState::getNeighbor(Direction direction) const {
     //get the blank tile place 
     std::pair<int, int> myPair = findMyBlankTile();
-    if (direction == 'UP') {
+    std::pair<int, int> theSwappingOne;
+    if (direction == Direction::'UP') {
         if (myPair.first == 3) {
-            return PuzzleState();
+            std::array{char, 16} blanks = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+            return PuzzleState(blanks);
         }
-        std::pair<int, int> theSwappingOne = {myPair.first + 1, myPair.second};
-    } else if (direction == 'DOWN') {
+        theSwappingOne = {myPair.first + 1, myPair.second};
+    } else if (direction == Direction::'DOWN') {
         if (myPair.first == 0) {
             return PuzzleState();
         }
-        std::pair<int, int> theSwappingOne = {myPair.first - 1, myPair.second};
-    } else if (direction == 'LEFT') {
+        theSwappingOne = {myPair.first - 1, myPair.second};
+    } else if (direction == Direction::'LEFT') {
         if (myPair.second == 3) {
             return PuzzleState();
         }
-        std::pair<int, int> theSwappingOne = {myPair.first1, myPair.second - 1};
+        theSwappingOne = {myPair.first, myPair.second - 1};
     } else {
         if (myPair.second == 0) {
             return PuzzleState();
         }
-        std::pair<int, int> theSwappingOne = {myPair.first1, myPair.second + 1};
+        theSwappingOne = {myPair.first, myPair.second + 1};
     }
     //get the tile the blank will swap with by looking at the direction and pisutin of the blank tile 
     //if we going down the tile to swap is the one above blank so blank would swap wit it 
@@ -124,10 +126,10 @@ const PuzzleState PuzzleState::getNeighbor(Direction direction) const {
     //check if its invalid or not (out of bounds ands tuff )
     //make a copy of the current puzzle state (i thin i will usea aa se helper for this)
     //make the change 
-    PuzzlesState myPuzzleState = createMyCopyState(myPair.first, myPair.second, theSwappingOne.first, theSwappingOne.second);
+    const PuzzleState myPuzzleState = createMyCopyState(myPair.first, myPair.second, theSwappingOne.first, theSwappingOne.second);
     //return it 
 
-    return PuzzleState();
+    return myPuzzleState;
 }
 
 //all possible states from a single move 
